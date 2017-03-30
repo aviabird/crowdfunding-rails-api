@@ -19,7 +19,7 @@ module Api
       private
 
       def project_params
-        params.require(:project).permit(:id, :title, :image_url, :video_url, :goal, :model, :start_date, :duration,
+        params.require(:project).permit(:id, :title, :image_url, :video_url, :goal_amount, :funding_model, :start_date, :duration, :category_id,
           rewards_attributes: [:id, :title, :description, :image_url, :amount],
           story_attributes: [:id, :heading, :description],
           faqs_attributes: [:id, :question, :answer],

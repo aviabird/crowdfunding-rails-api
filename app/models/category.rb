@@ -1,15 +1,13 @@
 # == Schema Information
 #
-# Table name: faqs
+# Table name: categories
 #
 #  id         :integer          not null, primary key
-#  question   :text
-#  answer     :text
+#  name       :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  project_id :integer
 #
 
-class Faq < ApplicationRecord
-  belongs_to :project, inverse_of: :faqs
+class Category < ApplicationRecord
+  has_many :projects
 end

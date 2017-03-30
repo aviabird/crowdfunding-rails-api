@@ -2,17 +2,17 @@
 #
 # Table name: projects
 #
-#  id         :integer          not null, primary key
-#  title      :string
-#  overview   :string
-#  image_url  :string
-#  video_url  :string
-#  goal       :string
-#  model      :string
-#  start_date :string
-#  duration   :string
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
+#  id            :integer          not null, primary key
+#  title         :string
+#  category_id   :integer
+#  image_url     :string
+#  video_url     :string
+#  goal_amount   :integer
+#  funding_model :string
+#  start_date    :datetime
+#  duration      :integer
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
 #
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
