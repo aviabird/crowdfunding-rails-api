@@ -16,7 +16,7 @@
 #
 
 class ProjectSerializer < ActiveModel::Serializer
-  attributes :id, :title, :overview, :image_url, :video_url, :goal, :model, :start_date, :duration
+  attributes :id, :title, :image_url, :video_url, :goal_amount, :funding_model, :start_date, :duration, :category_id
 
   has_many :rewards
   has_many :faqs
