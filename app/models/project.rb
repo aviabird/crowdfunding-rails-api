@@ -16,4 +16,10 @@
 #
 
 class Project < ApplicationRecord
+  has_many :rewards, :faqs, :links, :events
+  has_one :story
+
+
+  accepts_nested_attributes_for :story, :rewards, :faqs, :links, :events, :allow_destroy => true
+
 end
