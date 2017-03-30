@@ -16,9 +16,11 @@
 #
 
 class Project < ApplicationRecord
-  has_many :rewards, :faqs, :links, :events
-  has_one :story
-
+  has_many :rewards, inverse_of: :project
+  has_many :faqs, inverse_of: :project
+  has_many :links, inverse_of: :project
+  has_many :events, inverse_of: :project
+  has_one :story, inverse_of: :project
 
   accepts_nested_attributes_for :story, :rewards, :faqs, :links, :events, :allow_destroy => true
 

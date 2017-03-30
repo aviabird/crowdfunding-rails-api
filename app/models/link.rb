@@ -9,5 +9,5 @@
 #
 
 class Link < ApplicationRecord
-  belongs_to :project
+  belongs_to :project, inverse_of: :links
 end
