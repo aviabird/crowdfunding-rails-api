@@ -11,14 +11,14 @@ module ProjectService
     }
 
     def initialize(params)
-      @project_id = params[:id]
+      # @project_id = params[:id]
       @type = params[:type]
       @params = params
       @result = {}
     end
 
     def call
-      find_or_create_project
+      # find_or_create_project
       @model_obj = TYPES[@type].new(permitted_params)
       perform_image_upload_callbacks if @model_obj.valid?
       @result[:status] = @model_obj.save!
@@ -35,12 +35,17 @@ module ProjectService
     def permitted_params
       model_attrs = case @type
       when 'project' then project_attributes
+      when 'story' then story_attributes
       end
       @params.permit(*model_attrs)
     end
 
     def project_attributes
       [:id, :title, :video_url, :image_url, :goal_amount, :funding_model, :start_date, :duration, :category_id]
+    end
+
+    def story_attributes
+      [:id, :project_id, section_attributes: [:id, :heading, :description]]
     end
 
     def perform_image_upload_callbacks
