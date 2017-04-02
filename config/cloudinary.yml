@@ -1,0 +1,19 @@
+---
+development:
+  cloud_name: crowdpouch
+  api_key: '493218496143196'
+  api_secret: M21HYMhQGokxZobU9Oo98eoNW20
+  enhance_image_tag: true
+  static_image_support: false
+production:
+  cloud_name: crowdpouch
+  api_key: '493218496143196'
+  api_secret: M21HYMhQGokxZobU9Oo98eoNW20
+  enhance_image_tag: true
+  static_image_support: true
+test:
+  cloud_name: crowdpouch
+  api_key: '493218496143196'
+  api_secret: M21HYMhQGokxZobU9Oo98eoNW20
+  enhance_image_tag: true
+  static_image_support: false
