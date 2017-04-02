@@ -17,8 +17,6 @@
 
 class Project < ApplicationRecord
   
-  mount_uploader :avatar, AvatarUploader
-
   has_many :rewards, inverse_of: :project
   has_many :faqs, inverse_of: :project
   has_many :links, inverse_of: :project

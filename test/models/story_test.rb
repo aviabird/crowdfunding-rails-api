@@ -2,12 +2,10 @@
 #
 # Table name: stories
 #
-#  id          :integer          not null, primary key
-#  heading     :string
-#  description :text
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
-#  project_id  :integer
+#  id         :integer          not null, primary key
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  project_id :integer
 #
 
 require 'test_helper'

@@ -11,13 +11,12 @@ module Api
       end
 
       def create
-        upload_response = upload_image(params[:image_data])
-        @project = Project.new(project_params)
-        @project.image_url = upload_response["secure_url"]
-        if @project.save!
-          render json: @project, status: :created
+        result = ProjectService::CreateProject.call(params)
+        project = result[:model]
+        if result[:status]
+          render json: project, status: :created
         else
-          render json: @project.errors, status: :unprocessable_entity
+          render json: project.errors, status: :unprocessable_entity
         end
       end
 
@@ -43,23 +42,20 @@ module Api
 
       private
 
-      def project_params
-        params.require(:project).permit(:id, :title, :video_url, :image_url, :goal_amount, :funding_model, :start_date, :duration, :category_id,
-          rewards_attributes: [:id, :title, :description, :image_url, :amount],
-          story_attributes: [:id, :heading, :description],
-          faqs_attributes: [:id, :question, :answer],
-          links_attributes: [:id, :url],
-          events_attributes: [:id, :title, :country, :date, :image_url, :description]  
-        )
-      end
+      # def project_params
+      #   params.require(:project).permit(:id, :title, :video_url, :image_url, :goal_amount, :funding_model, :start_date, :duration, :category_id,
+      #     rewards_attributes: [:id, :title, :description, :image_url, :amount],
+      #     story_attributes: [:id, section_attributes: [:id, :heading, :description] ],
+      #     faqs_attributes: [:id, :question, :answer],
+      #     links_attributes: [:id, :url],
+      #     events_attributes: [:id, :title, :country, :date, :image_url, :description]  
+      #   )
+      # end
 
       def find_project
         @project = Project.find_by!(id: params[:id])
       end
 
-      def upload_image(image_data)
-        Cloudinary::Uploader.upload(image_data, options = {})
-      end
     end
   end
 end
