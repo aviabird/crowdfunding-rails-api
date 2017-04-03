@@ -9,6 +9,9 @@
 #
 
 class Story < ApplicationRecord
-  has_many :sections, inverse_of: :story
+  has_many :sections, inverse_of: :story, dependent: :destroy
   belongs_to :project, inverse_of: :story
+
+  accepts_nested_attributes_for :sections, :allow_destroy => true
+
 end

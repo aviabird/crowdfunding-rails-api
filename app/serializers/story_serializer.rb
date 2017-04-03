@@ -9,5 +9,7 @@
 #
 
 class StorySerializer < ActiveModel::Serializer
-  attributes :id, :heading, :description
+  attributes :id
+
+  has_many :sections
 end

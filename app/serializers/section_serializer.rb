@@ -11,6 +11,6 @@
 #  story_id    :integer
 #
 
-class Section < ApplicationRecord
-  belongs_to :story, inverse_of: :sections
+class SectionSerializer < ActiveModel::Serializer
+  attributes :id, :heading, :description, :image_url
 end

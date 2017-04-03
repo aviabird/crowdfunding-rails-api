@@ -3,6 +3,7 @@ class CreateSections < ActiveRecord::Migration[5.0]
     create_table :sections do |t|
       t.string :heading
       t.text :description
+      t.string :image_url
 
       t.timestamps
     end

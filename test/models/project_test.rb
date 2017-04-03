@@ -11,6 +11,7 @@
 #  funding_model :string
 #  start_date    :datetime
 #  duration      :integer
+#  approved      :boolean          default(FALSE)
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
 #

@@ -9,6 +9,7 @@ class CreateProjects < ActiveRecord::Migration[5.0]
       t.string :model
       t.string :start_date
       t.string :duration
+      t.boolean :approved, default: false
 
       t.timestamps
     end

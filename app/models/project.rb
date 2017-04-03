@@ -11,17 +11,18 @@
 #  funding_model :string
 #  start_date    :datetime
 #  duration      :integer
+#  approved      :boolean          default(FALSE)
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
 #
 
 class Project < ApplicationRecord
   
-  has_many :rewards, inverse_of: :project
-  has_many :faqs, inverse_of: :project
-  has_many :links, inverse_of: :project
-  has_many :events, inverse_of: :project
-  has_one :story, inverse_of: :project
+  has_many :rewards, inverse_of: :project, dependent: :destroy
+  has_many :faqs, inverse_of: :project, dependent: :destroy
+  has_many :links, inverse_of: :project, dependent: :destroy
+  has_many :events, inverse_of: :project, dependent: :destroy
+  has_one :story, inverse_of: :project, dependent: :destroy
   
   belongs_to :category
   
