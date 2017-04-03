@@ -52,7 +52,7 @@ module ProjectService
         @project.image_url = upload_image(@params[:image_data])
       when 'story'
         upload_story_images
-      when
+      when 'reward'
         upload_reward_images
       end
     end
