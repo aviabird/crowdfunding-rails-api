@@ -2,12 +2,12 @@
 #
 # Table name: faqs
 #
-#  id         :integer          not null, primary key
+#  id         :uuid             not null, primary key
 #  question   :text
 #  answer     :text
+#  project_id :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  project_id :integer
 #
 
 class Faq < ApplicationRecord

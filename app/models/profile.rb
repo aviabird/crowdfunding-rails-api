@@ -2,7 +2,7 @@
 #
 # Table name: profiles
 #
-#  id                :integer          not null, primary key
+#  id                :uuid             not null, primary key
 #  document_type     :string
 #  document_url      :string
 #  full_name         :string

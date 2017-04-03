@@ -2,9 +2,9 @@
 #
 # Table name: projects
 #
-#  id            :integer          not null, primary key
+#  id            :uuid             not null, primary key
 #  title         :string
-#  category_id   :integer
+#  category_id   :string
 #  image_url     :string
 #  video_url     :string
 #  goal_amount   :integer
