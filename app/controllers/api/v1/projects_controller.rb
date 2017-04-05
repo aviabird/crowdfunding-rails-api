@@ -24,6 +24,13 @@ module Api
         render json: @project, status: :ok
       end
 
+      def get_draft_project
+        unless find_project
+          @project = Project.draft
+        end
+        render json: @project, status: :ok
+      end
+
       def update 
         if @project.update(project_params)
           render json: @project, status: :ok
@@ -53,7 +60,7 @@ module Api
       # end
 
       def find_project
-        @project = Project.find_by!(id: params[:id])
+        @project = Project.where(id: params[:id]).first
       end
 
     end

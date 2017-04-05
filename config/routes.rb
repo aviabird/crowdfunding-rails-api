@@ -4,6 +4,7 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: { format: 'json' } do
     namespace :v1 do
+      get 'projects/draft/(:id)', to: 'projects#get_draft_project'
       resources :projects, only: [:create, :index, :update, :destroy, :show]
       resources :category, only: :index
     end

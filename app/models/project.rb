@@ -28,4 +28,15 @@ class Project < ApplicationRecord
   
   accepts_nested_attributes_for :story, :rewards, :faqs, :links, :events, :allow_destroy => true
 
+  def self.draft
+    project = Project.new(category: Category.first)
+    project.rewards.build
+    project.faqs.build
+    project.links.build
+    project.build_story
+    project.story.sections.build
+    project.save
+    project
+  end
+
 end
