@@ -49,7 +49,7 @@ module ProjectService
     def perform_image_upload_callbacks
       case @type
       when 'project'
-        @project.image_url = upload_image(@params[:image_data])
+        upload_project_image
       when 'story'
         upload_story_images
       when 'reward'
@@ -57,21 +57,29 @@ module ProjectService
       end
     end
 
+    def upload_project_image
+      image_data = @params[:image_data]
+      return if image_data == ""
+      @project.image_url = upload_image(image_data)
+    end
+
     def upload_story_images
       @params["story_attributes"]["sections_attributes"].each_with_index do |section, index|
-        @project.story.sections[index].image_url = upload_image(section[:image_data])
+        image_data = section[:image_data]
+        return if image_data == ""
+        @project.story.sections[index].image_url = upload_image(image_data)
       end
     end
 
     def upload_reward_images
       @params["rewards_attributes"].each_with_index do |reward, index|
-        @project.rewards[index].image_url = upload_image(reward[:image_data])
+        image_data = reward[:image_data]
+        return if image_data == ""
+        @project.rewards[index].image_url = upload_image(image_data)
       end 
     end
 
     def upload_image(image_data)
-      return if image_data == ""
-      
       tries = 3
       begin
         response = Cloudinary::Uploader.upload(image_data, options = {})
