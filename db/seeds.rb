@@ -10,3 +10,5 @@ categories = %w(Art Comics Crafts Dance Community Fashion Film Video Food Games 
 categories.each do |category|
   Category.find_or_create_by!(name: category)
 end
+
+User.create(email: 'user@crowdpouch.com', user_name: 'crowdpouch', name: 'user1', password: "12345678")
