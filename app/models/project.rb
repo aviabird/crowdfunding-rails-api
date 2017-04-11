@@ -2,9 +2,10 @@
 #
 # Table name: projects
 #
-#  id            :uuid             not null, primary key
+#  id            :integer          not null, primary key
 #  title         :string
-#  category_id   :string
+#  category_id   :integer
+#  user_id       :integer
 #  image_url     :string
 #  video_url     :string
 #  goal_amount   :integer
@@ -25,7 +26,7 @@ class Project < ApplicationRecord
   has_one :story, inverse_of: :project, dependent: :destroy
   
   belongs_to :category
-  
+  belongs_to :user, inverse_of: :projects
   accepts_nested_attributes_for :story, :rewards, :faqs, :links, :events, :allow_destroy => true
 
   def self.draft

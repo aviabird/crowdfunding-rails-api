@@ -1,9 +1,9 @@
 # == Schema Information
 #
-# Table name: stories
+# Table name: roles
 #
 #  id         :integer          not null, primary key
-#  project_id :integer
+#  name       :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
@@ -11,9 +11,7 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  heading: MyString
-  description: MyText
+  name: MyString
 
 two:
-  heading: MyString
-  description: MyText
+  name: MyString

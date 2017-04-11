@@ -1,8 +1,8 @@
 class CreateLinks < ActiveRecord::Migration[5.0]
   def change
-    create_table :links, id: :uuid do |t|
+    create_table :links do |t|
       t.string :url
-      t.string :project_id
+      t.integer :project_id
 
       t.timestamps
     end

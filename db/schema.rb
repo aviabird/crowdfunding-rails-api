@@ -10,45 +10,43 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170408103448) do
+ActiveRecord::Schema.define(version: 20170411180000) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-  enable_extension "uuid-ossp"
 
-  create_table "categories", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
+  create_table "categories", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "events", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
+  create_table "events", force: :cascade do |t|
     t.string   "title"
     t.string   "country"
     t.date     "date"
     t.string   "image_url"
     t.text     "description"
-    t.string   "project_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
 
-  create_table "faqs", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
+  create_table "faqs", force: :cascade do |t|
     t.text     "question"
     t.text     "answer"
-    t.string   "project_id"
+    t.integer  "project_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "links", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
+  create_table "links", force: :cascade do |t|
     t.string   "url"
-    t.string   "project_id"
+    t.integer  "project_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "profiles", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
+  create_table "profiles", force: :cascade do |t|
     t.string   "document_type"
     t.string   "document_url"
     t.string   "full_name"
@@ -56,13 +54,15 @@ ActiveRecord::Schema.define(version: 20170408103448) do
     t.date     "birth_date"
     t.string   "profile_image_url"
     t.string   "bio"
+    t.integer  "user_id"
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
   end
 
-  create_table "projects", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
+  create_table "projects", force: :cascade do |t|
     t.string   "title"
-    t.string   "category_id"
+    t.integer  "category_id"
+    t.integer  "user_id"
     t.string   "image_url"
     t.string   "video_url"
     t.integer  "goal_amount"
@@ -74,27 +74,33 @@ ActiveRecord::Schema.define(version: 20170408103448) do
     t.datetime "updated_at",                    null: false
   end
 
-  create_table "rewards", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
+  create_table "rewards", force: :cascade do |t|
     t.string   "title"
     t.text     "description"
     t.string   "image_url"
     t.integer  "amount"
-    t.string   "project_id"
+    t.integer  "project_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
 
-  create_table "sections", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
+  create_table "roles", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "sections", force: :cascade do |t|
     t.string   "heading"
     t.text     "description"
     t.string   "image_url"
-    t.string   "story_id"
+    t.integer  "story_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
 
-  create_table "stories", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
-    t.string   "project_id"
+  create_table "stories", force: :cascade do |t|
+    t.integer  "project_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -122,10 +128,13 @@ ActiveRecord::Schema.define(version: 20170408103448) do
     t.json     "tokens"
     t.datetime "created_at",                               null: false
     t.datetime "updated_at",                               null: false
+    t.integer  "role_id"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+    t.index ["role_id"], name: "index_users_on_role_id", using: :btree
     t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true, using: :btree
   end
 
+  add_foreign_key "users", "roles"
 end

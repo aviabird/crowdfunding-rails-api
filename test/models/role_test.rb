@@ -1,14 +1,17 @@
 # == Schema Information
 #
-# Table name: links
+# Table name: roles
 #
 #  id         :integer          not null, primary key
-#  url        :string
-#  project_id :integer
+#  name       :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
 
-class LinkSerializer < ActiveModel::Serializer
-  attributes :id, :url
+require 'test_helper'
+
+class RoleTest < ActiveSupport::TestCase
+  # test "the truth" do
+  #   assert true
+  # end
 end

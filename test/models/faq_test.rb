@@ -2,10 +2,10 @@
 #
 # Table name: faqs
 #
-#  id         :uuid             not null, primary key
+#  id         :integer          not null, primary key
 #  question   :text
 #  answer     :text
-#  project_id :string
+#  project_id :integer
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #

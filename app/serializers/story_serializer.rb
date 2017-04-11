@@ -2,8 +2,8 @@
 #
 # Table name: stories
 #
-#  id         :uuid             not null, primary key
-#  project_id :string
+#  id         :integer          not null, primary key
+#  project_id :integer
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #

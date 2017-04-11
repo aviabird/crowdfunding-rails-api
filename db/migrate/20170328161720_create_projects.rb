@@ -1,8 +1,9 @@
 class CreateProjects < ActiveRecord::Migration[5.0]
   def change
-    create_table :projects, id: :uuid do |t|
+    create_table :projects do |t|
       t.string :title
-      t.string :category_id
+      t.integer :category_id
+      t.integer :user_id
       t.string :image_url
       t.string :video_url
       t.integer :goal_amount

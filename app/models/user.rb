@@ -25,6 +25,7 @@
 #  tokens                 :json
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
+#  role_id                :integer
 #
 
 class User < ActiveRecord::Base
@@ -33,4 +34,8 @@ class User < ActiveRecord::Base
           :recoverable, :rememberable, :trackable, :validatable,
           :confirmable, :omniauthable
   include DeviseTokenAuth::Concerns::User
+
+  belongs_to :role
+  has_many :projects, inverse_of: :user, dependent: :destroy
+
 end
