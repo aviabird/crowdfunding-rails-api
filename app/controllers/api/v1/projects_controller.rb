@@ -2,6 +2,7 @@ module Api
   module V1
     class ProjectsController < ApplicationController
 
+      before_action :authenticate_user!, only: :create
       before_action :find_project, only: [:show, :update, :destroy, :show]
       rescue_from ActiveRecord::RecordNotFound, with: :not_found
 
