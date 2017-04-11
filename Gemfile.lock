@@ -78,9 +78,6 @@ GEM
       railties (>= 4.1.0, < 5.1)
       responders
       warden (~> 1.2.3)
-    devise_token_auth (0.1.40)
-      devise (> 3.5.2, <= 4.2)
-      rails (< 6)
     domain_name (0.5.20170223)
       unf (>= 0.0.5, < 1.0.0)
     erubis (2.7.0)
@@ -92,7 +89,6 @@ GEM
       activesupport (>= 4.1.0)
     haml (4.0.7)
       tilt
-    hashie (3.5.5)
     http-cookie (1.0.3)
       domain_name (~> 0.5)
     i18n (0.8.1)
@@ -134,9 +130,6 @@ GEM
     nio4r (2.0.0)
     nokogiri (1.7.1)
       mini_portile2 (~> 2.1.0)
-    omniauth (1.6.1)
-      hashie (>= 3.4.6, < 3.6.0)
-      rack (>= 1.6.2, < 3)
     orm_adapter (0.5.0)
     pg (0.20.0)
     pry (0.10.4)
@@ -252,11 +245,10 @@ DEPENDENCIES
   carrierwave (~> 0.11.2)
   cloudinary
   coffee-rails (~> 4.2)
-  devise_token_auth
+  devise
   jbuilder (~> 2.5)
   jquery-rails
   listen (~> 3.0.5)
-  omniauth
   pg (~> 0.20.0)
   pry
   puma (~> 3.0)
