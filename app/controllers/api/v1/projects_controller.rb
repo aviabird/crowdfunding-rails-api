@@ -2,7 +2,7 @@ module Api
   module V1
     class ProjectsController < ApplicationController
 
-      before_action :authenticate_user!, only: :create
+      before_action :authenticate_user!, only: [:create, :get_draft_project]
       before_action :find_project, only: [:show, :update, :destroy, :show]
       rescue_from ActiveRecord::RecordNotFound, with: :not_found
 
@@ -26,10 +26,11 @@ module Api
       end
 
       def get_draft_project
-        unless find_project
-          @project = Project.draft
+        project = current_user.draft_project
+        if(!project)
+          project = Project.draft(current_user)
         end
-        render json: @project, status: :ok
+        render json: project, status: :ok
       end
 
       def update 
@@ -61,7 +62,7 @@ module Api
       # end
 
       def find_project
-        @project = Project.where(id: params[:id]).first
+        @project = Project.find(params[:id])
       end
 
     end

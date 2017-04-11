@@ -35,7 +35,15 @@ class User < ActiveRecord::Base
           :confirmable, :omniauthable
   include DeviseTokenAuth::Concerns::User
 
+  before_validation :assign_default_role, on: :create
+
   belongs_to :role
   has_many :projects, inverse_of: :user, dependent: :destroy
+  has_one :draft_project, -> { where(approved: false) }, class_name: 'Project'
+
+  def assign_default_role
+    role = Role.find_by_name("donor")
+    self.role = role if self.role.blank?
+  end
 
 end

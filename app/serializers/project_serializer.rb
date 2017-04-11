@@ -23,6 +23,5 @@ class ProjectSerializer < ActiveModel::Serializer
   has_many :rewards
   has_many :faqs
   has_many :links
-  has_many :events
   has_one :story
 end

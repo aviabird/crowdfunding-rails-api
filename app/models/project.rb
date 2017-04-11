@@ -22,15 +22,15 @@ class Project < ApplicationRecord
   has_many :rewards, inverse_of: :project, dependent: :destroy
   has_many :faqs, inverse_of: :project, dependent: :destroy
   has_many :links, inverse_of: :project, dependent: :destroy
-  has_many :events, inverse_of: :project, dependent: :destroy
   has_one :story, inverse_of: :project, dependent: :destroy
   
   belongs_to :category
   belongs_to :user, inverse_of: :projects
-  accepts_nested_attributes_for :story, :rewards, :faqs, :links, :events, :allow_destroy => true
+  accepts_nested_attributes_for :story, :rewards, :faqs, :links, :allow_destroy => true
 
-  def self.draft
-    project = Project.new(category: Category.first)
+  def self.draft(user)
+    category = Category.find_by_name("Art")
+    project = user.projects.build(category_id: category.id)
     project.rewards.build
     project.faqs.build
     project.links.build
