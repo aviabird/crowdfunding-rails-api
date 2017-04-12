@@ -9,7 +9,7 @@ Rails.application.config.middleware.use OmniAuth::Builder do
     setup: (lambda do |env|
       request = Rack::Request.new(env)
       env['omniauth.strategy'].options['token_params'] = {
-        redirect_uri: 'https://crowdpouch.herokuapp.com/auth/google_oauth2/callback'
+        redirect_uri: 'https://crowdpouch.herokuapp.com/auth/google/callback'
       }
     end)
   }
