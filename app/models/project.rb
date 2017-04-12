@@ -24,6 +24,8 @@ class Project < ApplicationRecord
   has_many :links, inverse_of: :project, dependent: :destroy
   has_one :story, inverse_of: :project, dependent: :destroy
   
+  before_update :update_user_role, if: -> (model) {model.approved_changed? && model.approved}
+
   belongs_to :category
   belongs_to :user, inverse_of: :projects
   accepts_nested_attributes_for :story, :rewards, :faqs, :links, :allow_destroy => true
@@ -38,6 +40,10 @@ class Project < ApplicationRecord
     project.story.sections.build
     project.save
     project
+  end
+
+  def update_user_role
+    self.user.update_user_role_to_creator
   end
 
 end
