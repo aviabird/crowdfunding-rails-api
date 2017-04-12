@@ -58,6 +58,7 @@ gem 'carrierwave', '~> 0.11.2'
 gem 'cloudinary'
 gem 'rails_admin'
 gem 'devise_token_auth'
+gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'omniauth-google-oauth2'
 gem 'dotenv-rails', groups: [:development, :test]
