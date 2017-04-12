@@ -60,3 +60,5 @@ gem 'rails_admin'
 gem 'devise_token_auth'
 gem 'omniauth-facebook'
 gem 'omniauth-google-oauth2'
+gem 'dotenv-rails', groups: [:development, :test]
+

@@ -54,14 +54,14 @@ Rails.application.configure do
 
   # Change mail delivery to either :smtp, :sendmail, :file, :test
   config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = {
-    address: "smtp.gmail.com",
-    port: 587,
-    domain: "crowdpouch.com",
-    authentication: "plain",
-    enable_starttls_auto: true,
-    user_name: "shekharait254@gmail.com",
-    password: "GoogleIndia!1"
+  
+  ActionMailer::Base.smtp_settings = {
+   :address => 'smtp.sendgrid.net',
+   :port => '25',
+   :domain => 'crowdpouch.com',
+   :authentication => :plain,
+   :user_name => ENV['SENDGRID_USERNAME'],
+   :password => ENV['SENDGRID_PASSWORD']
   }
 
   # devise email confirmation
