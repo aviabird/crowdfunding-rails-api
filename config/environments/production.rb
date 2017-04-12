@@ -93,6 +93,6 @@ Rails.application.configure do
    :user_name => ENV['SENDGRID_USERNAME'],
    :password => ENV['SENDGRID_PASSWORD']
   }
-  config.action_mailer.default_url_options = { host: 'crowdpouch.com' }
+  config.action_mailer.default_url_options = { host: 'https://crd-test.firebaseapp.com' }
 
 end
