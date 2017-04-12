@@ -19,7 +19,7 @@
 #  confirmation_sent_at   :datetime
 #  unconfirmed_email      :string
 #  name                   :string
-#  user_name              :string
+#  nickname               :string
 #  image                  :string
 #  email                  :string
 #  tokens                 :json
@@ -35,7 +35,7 @@ class User < ActiveRecord::Base
           :confirmable, :omniauthable
   include DeviseTokenAuth::Concerns::User
 
-  before_validation :assign_default_role, on: :create
+  before_validation :assign_default_role, unless: -> (model) { model.role_id }
 
   belongs_to :role
   has_many :projects, inverse_of: :user, dependent: :destroy
@@ -43,7 +43,7 @@ class User < ActiveRecord::Base
 
   def assign_default_role
     role = Role.find_by_name("donor")
-    self.role = role if self.role.blank?
+    self.role = role
   end
 
 end
