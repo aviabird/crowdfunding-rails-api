@@ -1,6 +1,7 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
+  OmniAuth.config.full_host = "https://crowdpouch.herokuapp.com/"
   # Code is not reloaded between requests.
   config.cache_classes = true
 
@@ -65,7 +66,6 @@ Rails.application.configure do
   # the I18n.default_locale when a translation cannot be found).
   config.i18n.fallbacks = true
 
-  OmniAuth.config.full_host = "https://crowdpouch.herokuapp.com"
 
   # Send deprecation notices to registered listeners.
   config.active_support.deprecation = :notify
