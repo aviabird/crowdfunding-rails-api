@@ -57,10 +57,7 @@ gem 'rack-cors', :require => 'rack/cors'
 gem 'carrierwave', '~> 0.11.2'
 gem 'cloudinary'
 gem 'rails_admin'
-gem 'devise_token_auth'
 gem 'dotenv-rails', groups: [:development, :test]
 gem 'httparty'
 gem 'jwt'
 gem 'httpclient'
-gem 'omniauth'
-
