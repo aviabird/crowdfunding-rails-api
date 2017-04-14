@@ -22,7 +22,7 @@ class User < ApplicationRecord
   validates :email, presence: true, length: { maximum: 255 },
                     format: { with: VALID_EMAIL_REGEX },
                     uniqueness: { case_sensitive: false }
-  validates :password, presence: true, length: { minimum: 8 }
+  # validates :password, presence: true, length: { minimum: 8 }
 
 
   before_validation :assign_default_role, unless: -> (model) { model.role_id }
@@ -80,18 +80,10 @@ class User < ApplicationRecord
     
     user.name = "#{first_name} #{last_name}"
 
-    if user.image.blank?
-      # user.image = Image.new(name: user.full_name, remote_file_url: params[:image_url])
-      user.image = params[:image_url]
+    if user.image_url.blank?
+      user.image_url = params[:image_url]
     end
 
-    # User PaperCLip here with Image Model
-    # ====================================
-    # if user.image_url.blank?
-    #   user.image = Image.new(name: user.full_name, remote_file_url: params[:image_url])
-    # end
-    user.confirmed_at ||= Time.now
-    user.password = Devise.friendly_token[0,10] if user.encrypted_password.blank?
     if user.email.blank?
       user.save(validate: false)
     else
@@ -102,29 +94,5 @@ class User < ApplicationRecord
     user
   end
 
-
-  def build_auth_header(token, client_id='default')
-    client_id ||= 'default'
-
-    # client may use expiry to prevent validation request if expired
-    # must be cast as string or headers will break
-    expiry = self.tokens[client_id]['expiry'] || self.tokens[client_id][:expiry]
-
-    max_clients = DeviseTokenAuth.max_number_of_devices
-    while self.tokens.keys.length > 0 and max_clients < self.tokens.keys.length
-      oldest_token = self.tokens.min_by { |cid, v| v[:expiry] || v["expiry"] }
-      self.tokens.delete(oldest_token.first)
-    end
-
-    self.save!
-
-    return {
-      DeviseTokenAuth.headers_names[:"access-token"] => token,
-      DeviseTokenAuth.headers_names[:"token-type"]   => "Bearer",
-      DeviseTokenAuth.headers_names[:"client"]       => client_id,
-      DeviseTokenAuth.headers_names[:"expiry"]       => expiry.to_s,
-      DeviseTokenAuth.headers_names[:"uid"]          => self.uid
-    }
-  end
 
 end
