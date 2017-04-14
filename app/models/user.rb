@@ -1,5 +1,7 @@
 class User < ApplicationRecord
 
+  has_secure_password
+
   before_validation :assign_default_role, unless: -> (model) { model.role_id }
   delegate :name, to: :role, prefix: true
 

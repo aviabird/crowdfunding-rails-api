@@ -3,6 +3,8 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: { format: 'json' } do
     namespace :v1 do
+      post '/authenticate', to: 'authentication#authenticate'
+      post '/users' => 'users#create'
       post 'auth/:provider', to: 'auth#authenticate'
       get 'projects/draft', to: 'projects#get_draft_project'
       resources :projects, only: [:create, :index, :update, :destroy, :show]
