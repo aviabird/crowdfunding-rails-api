@@ -12,8 +12,6 @@ module CrowdpouchApi
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
 
-    # (For Devise and Rails Admin) Allow session management
-    # Read Blog: http://www.carlosramireziii.com/how-to-add-active-admin-to-a-rails-5-api-application.html
     config.middleware.insert_before 0, "Rack::Cors", :debug => true, :logger => (-> { Rails.logger }) do
       allow do
         origins '*'
@@ -26,7 +24,7 @@ module CrowdpouchApi
 
         resource '*',
           :headers => :any,
-          :expose  => ['access-token', 'expiry', 'token-type', 'uid', 'client'],
+          :expose  => ['Authorization'],
           :methods => [:get, :post, :delete, :put, :patch, :options, :head],
           :max_age => 0
       end

@@ -9,6 +9,4 @@ class ApplicationController < ActionController::Base
     render json: { error: 'Not Authorized' }, status: 401 unless @current_user
   end
 
-  # protect_from_forgery with: :null_session
-  # skip_before_filter  :verify_authenticity_token
 end

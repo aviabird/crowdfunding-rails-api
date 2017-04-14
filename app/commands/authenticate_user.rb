@@ -18,7 +18,7 @@ class AuthenticateUser
 
   private
 
-  attr_accessor :email, :password
+  attr_reader :email, :password
 
   def authenticated_user
     user = User.find_by_email(email)

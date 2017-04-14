@@ -2,7 +2,7 @@ module Api
   module V1
     class ProjectsController < ApplicationController
 
-      before_action :authenticate_user!, only: [:create, :get_draft_project]
+      before_action :authenticate_request, only: [:create, :get_draft_project]
       before_action :find_project, only: [:show, :update, :destroy, :show]
       rescue_from ActiveRecord::RecordNotFound, with: :not_found
 
@@ -26,6 +26,7 @@ module Api
       end
 
       def get_draft_project
+        binding.pry
         project = current_user.draft_project
         if(!project)
           project = Project.draft(current_user)

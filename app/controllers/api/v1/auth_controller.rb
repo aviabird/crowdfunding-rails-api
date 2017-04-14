@@ -1,7 +1,7 @@
 module Api
   module V1
     class AuthController < ApplicationController
-      include CommonConcern
+      include RenderConcern
 
       def authenticate
         @oauth = "Oauth::#{params['provider'].titleize}".constantize.new(params)  
