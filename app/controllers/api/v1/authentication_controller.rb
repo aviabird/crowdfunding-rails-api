@@ -12,7 +12,7 @@ class Api::V1::AuthenticationController < ApplicationController
         response.set_header("Authorization", result[:auth_token])
         render json: result[:user], serializer: UserSerializer, status: :ok
       else
-        render json: { error: command.errors }, status: :unauthorized
+        render json: { error: command.errors }
       end
     end
 
