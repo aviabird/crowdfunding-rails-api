@@ -80,7 +80,7 @@ class User < ApplicationRecord
     
     user.name = "#{first_name} #{last_name}"
 
-    user.password = SecureRandom.urlsafe_base64.to_s if user.password.blank?
+    user.password = SecureRandom.urlsafe_base64.to_s if user.password_digest.blank?
     
     if user.image_url.blank?
       user.image_url = params[:image_url]
