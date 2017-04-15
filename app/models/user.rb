@@ -22,9 +22,9 @@ class User < ApplicationRecord
   validates :email, presence: true, length: { maximum: 255 },
                     format: { with: VALID_EMAIL_REGEX },
                     uniqueness: { case_sensitive: false }
-  # validates :password, presence: true, length: { minimum: 8 }
+  validates :password, presence: true, length: { minimum: 8 }
 
-
+  before_create :confirmation_token
   before_validation :assign_default_role, unless: -> (model) { model.role_id }
 
   delegate :name, to: :role, prefix: true
@@ -80,6 +80,8 @@ class User < ApplicationRecord
     
     user.name = "#{first_name} #{last_name}"
 
+    user.password = SecureRandom.urlsafe_base64.to_s if user.password.blank?
+    
     if user.image_url.blank?
       user.image_url = params[:image_url]
     end
@@ -94,5 +96,19 @@ class User < ApplicationRecord
     user
   end
 
+  def email_activate
+    self.email_confirmed = true
+    self.confirm_token = nil
+    save!(:validate => false)
+  end
+
+
+  private
+  
+  def confirmation_token
+    if self.confirm_token.blank?
+      self.confirm_token = SecureRandom.urlsafe_base64.to_s
+    end
+  end
 
 end

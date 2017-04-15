@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170413064211) do
+ActiveRecord::Schema.define(version: 20170415064433) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -121,9 +121,11 @@ ActiveRecord::Schema.define(version: 20170413064211) do
     t.string   "email"
     t.string   "image_url"
     t.string   "password_digest"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
     t.integer  "role_id"
+    t.boolean  "email_confirmed", default: false
+    t.string   "confirm_token"
     t.index ["role_id"], name: "index_users_on_role_id", using: :btree
   end
 

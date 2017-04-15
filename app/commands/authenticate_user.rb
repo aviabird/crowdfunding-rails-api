@@ -9,6 +9,10 @@ class AuthenticateUser
   def call
     user = authenticated_user
     if user
+      if !user.email_confirmed
+        errors.add :user_authentication, 'Please activate your account by following the instructions in the account confirmation email you received to proceed'
+        return nil
+      end
       token = JsonWebToken.encode(user_id: user.id)
       { auth_token: token, user: user }
     else

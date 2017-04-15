@@ -1,0 +1,8 @@
+development:
+  redirect_url: http://localhost:4200
+
+test:
+  redirect_url: http://localhost:4200
+
+production:
+  redirect_url: https://crd-test.firebaseapp.com

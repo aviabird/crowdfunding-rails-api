@@ -26,7 +26,6 @@ module Api
       end
 
       def get_draft_project
-        binding.pry
         project = current_user.draft_project
         if(!project)
           project = Project.draft(current_user)
