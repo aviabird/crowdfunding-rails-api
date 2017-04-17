@@ -1,6 +1,6 @@
 class Api::V1::AuthenticationController < ApplicationController
 
-    skip_before_action :authenticate_request
+    skip_before_action :authenticate_request, only: :authenticate
 
     def authenticate
       email = params[:credentials][:email]
@@ -17,10 +17,7 @@ class Api::V1::AuthenticationController < ApplicationController
     end
 
     def set_user_by_token
-      user = AuthorizeApiRequest.call(request.headers).result
-      if user
-        render json: user, serializer: UserSerializer, status: :ok
-      end
+      render json: current_user, serializer: UserSerializer, status: :ok
     end
 
 end
