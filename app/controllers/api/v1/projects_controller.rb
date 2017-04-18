@@ -3,7 +3,7 @@ module Api
     class ProjectsController < ApplicationController
 
       before_action :authenticate_request, only: [:create, :get_draft_project]
-      before_action :find_project, only: [:show, :update, :destroy, :show]
+      before_action :find_project, only: [:show, :update, :launch, :destroy, :show]
       rescue_from ActiveRecord::RecordNotFound, with: :not_found
 
       def index
@@ -23,6 +23,10 @@ module Api
 
       def show
         render json: @project, status: :ok
+      end
+
+      def launch
+        @project.launch_project
       end
 
       def get_draft_project
@@ -50,16 +54,6 @@ module Api
       end
 
       private
-
-      # def project_params
-      #   params.require(:project).permit(:id, :title, :video_url, :image_url, :goal_amount, :funding_model, :start_date, :duration, :category_id,
-      #     rewards_attributes: [:id, :title, :description, :image_url, :amount],
-      #     story_attributes: [:id, section_attributes: [:id, :heading, :description] ],
-      #     faqs_attributes: [:id, :question, :answer],
-      #     links_attributes: [:id, :url],
-      #     events_attributes: [:id, :title, :country, :date, :image_url, :description]  
-      #   )
-      # end
 
       def find_project
         @project = Project.find(params[:id])

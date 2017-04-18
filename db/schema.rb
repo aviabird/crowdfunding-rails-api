@@ -73,6 +73,7 @@ ActiveRecord::Schema.define(version: 20170418092950) do
 
   create_table "projects", force: :cascade do |t|
     t.string   "title"
+    t.string   "aasm_state"
     t.integer  "category_id"
     t.integer  "user_id"
     t.string   "image_url"

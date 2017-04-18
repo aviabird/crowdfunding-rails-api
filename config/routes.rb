@@ -9,6 +9,7 @@ Rails.application.routes.draw do
       get '/users/confirm_email', to: 'users#confirm_email'
       post 'auth/:provider', to: 'auth#authenticate'
       get 'projects/draft', to: 'projects#get_draft_project'
+      post 'projects/launch', to: 'projects#launch'
       resources :projects, only: [:create, :index, :update, :destroy, :show]
       resources :category, only: :index
     end

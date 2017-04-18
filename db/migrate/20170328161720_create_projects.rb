@@ -2,6 +2,7 @@ class CreateProjects < ActiveRecord::Migration[5.0]
   def change
     create_table :projects do |t|
       t.string :title
+      t.string :aasm_state
       t.integer :category_id
       t.integer :user_id
       t.string :image_url

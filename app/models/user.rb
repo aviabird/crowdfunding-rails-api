@@ -33,11 +33,11 @@ class User < ApplicationRecord
 
   belongs_to :role
   has_many :social_auths, dependent: :destroy
-  has_many :projects, inverse_of: :user, dependent: :destroy
-  has_many :project_backers
-  has_many :backed_projects, through: :project_backers, dependent: :destroy
+  has_many :self_projects, class_name: 'Project', inverse_of: :user, dependent: :destroy
+  has_many :project_backers, dependent: :destroy
+  has_many :projects, through: :project_backers
 
-  has_one :draft_project, -> { where(approved: false) }, class_name: 'Project'
+  has_one :draft_project, -> { where(aasm_state: "draft") }, class_name: 'Project'
 
   def assign_default_role
     role = Role.find_by_name("donor")
