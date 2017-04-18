@@ -7,5 +7,7 @@ class CreateFaqs < ActiveRecord::Migration[5.0]
 
       t.timestamps
     end
+
+    add_index :faqs, :project_id
   end
 end

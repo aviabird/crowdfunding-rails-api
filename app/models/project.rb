@@ -2,19 +2,20 @@
 #
 # Table name: projects
 #
-#  id            :integer          not null, primary key
-#  title         :string
-#  category_id   :integer
-#  user_id       :integer
-#  image_url     :string
-#  video_url     :string
-#  goal_amount   :integer
-#  funding_model :string
-#  start_date    :datetime
-#  duration      :integer
-#  approved      :boolean          default(FALSE)
-#  created_at    :datetime         not null
-#  updated_at    :datetime         not null
+#  id             :integer          not null, primary key
+#  title          :string
+#  category_id    :integer
+#  user_id        :integer
+#  image_url      :string
+#  video_url      :string
+#  pledged_amount :integer
+#  funded_amount  :integer
+#  funding_model  :string
+#  start_date     :datetime
+#  duration       :integer
+#  approved       :boolean          default(FALSE)
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
 #
 
 class Project < ApplicationRecord
@@ -23,7 +24,9 @@ class Project < ApplicationRecord
   has_many :faqs, inverse_of: :project, dependent: :destroy
   has_many :links, inverse_of: :project, dependent: :destroy
   has_one :story, inverse_of: :project, dependent: :destroy
-  
+  has_many :project_backers
+  has_many :backers, through: :project_backers, dependent: :destroy
+
   before_update :update_user_role, if: -> (model) {model.approved_changed? && model.approved}
 
   belongs_to :category

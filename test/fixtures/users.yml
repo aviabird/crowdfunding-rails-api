@@ -7,9 +7,11 @@
 #  email           :string
 #  image_url       :string
 #  password_digest :string
+#  email_confirmed :boolean          default(FALSE)
+#  confirm_token   :string
+#  role_id         :integer
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
-#  role_id         :integer
 #
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html

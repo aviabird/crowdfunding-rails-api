@@ -6,5 +6,7 @@ class CreateLinks < ActiveRecord::Migration[5.0]
 
       t.timestamps
     end
+
+    add_index :links, :project_id
   end
 end

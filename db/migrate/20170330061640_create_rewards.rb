@@ -9,5 +9,7 @@ class CreateRewards < ActiveRecord::Migration[5.0]
 
       t.timestamps
     end
+
+    add_index :rewards, :project_id
   end
 end

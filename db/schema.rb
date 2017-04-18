@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170415064433) do
+ActiveRecord::Schema.define(version: 20170418092950) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,6 +37,7 @@ ActiveRecord::Schema.define(version: 20170415064433) do
     t.integer  "project_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["project_id"], name: "index_faqs_on_project_id", using: :btree
   end
 
   create_table "links", force: :cascade do |t|
@@ -44,6 +45,7 @@ ActiveRecord::Schema.define(version: 20170415064433) do
     t.integer  "project_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["project_id"], name: "index_links_on_project_id", using: :btree
   end
 
   create_table "profiles", force: :cascade do |t|
@@ -57,6 +59,16 @@ ActiveRecord::Schema.define(version: 20170415064433) do
     t.integer  "user_id"
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
+    t.index ["user_id"], name: "index_profiles_on_user_id", using: :btree
+  end
+
+  create_table "project_backers", force: :cascade do |t|
+    t.integer  "project_id"
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["project_id"], name: "index_project_backers_on_project_id", using: :btree
+    t.index ["user_id"], name: "index_project_backers_on_user_id", using: :btree
   end
 
   create_table "projects", force: :cascade do |t|
@@ -65,13 +77,16 @@ ActiveRecord::Schema.define(version: 20170415064433) do
     t.integer  "user_id"
     t.string   "image_url"
     t.string   "video_url"
-    t.integer  "goal_amount"
+    t.integer  "pledged_amount"
+    t.integer  "funded_amount"
     t.string   "funding_model"
     t.datetime "start_date"
     t.integer  "duration"
-    t.boolean  "approved",      default: false
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
+    t.boolean  "approved",       default: false
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+    t.index ["category_id"], name: "index_projects_on_category_id", using: :btree
+    t.index ["user_id"], name: "index_projects_on_user_id", using: :btree
   end
 
   create_table "rewards", force: :cascade do |t|
@@ -82,6 +97,7 @@ ActiveRecord::Schema.define(version: 20170415064433) do
     t.integer  "project_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.index ["project_id"], name: "index_rewards_on_project_id", using: :btree
   end
 
   create_table "roles", force: :cascade do |t|
@@ -97,6 +113,7 @@ ActiveRecord::Schema.define(version: 20170415064433) do
     t.integer  "story_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.index ["story_id"], name: "index_sections_on_story_id", using: :btree
   end
 
   create_table "social_auths", force: :cascade do |t|
@@ -114,6 +131,7 @@ ActiveRecord::Schema.define(version: 20170415064433) do
     t.integer  "project_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["project_id"], name: "index_stories_on_project_id", using: :btree
   end
 
   create_table "users", force: :cascade do |t|
@@ -121,13 +139,12 @@ ActiveRecord::Schema.define(version: 20170415064433) do
     t.string   "email"
     t.string   "image_url"
     t.string   "password_digest"
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
-    t.integer  "role_id"
     t.boolean  "email_confirmed", default: false
     t.string   "confirm_token"
+    t.integer  "role_id"
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
     t.index ["role_id"], name: "index_users_on_role_id", using: :btree
   end
 
-  add_foreign_key "users", "roles"
 end

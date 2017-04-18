@@ -7,9 +7,11 @@
 #  email           :string
 #  image_url       :string
 #  password_digest :string
+#  email_confirmed :boolean          default(FALSE)
+#  confirm_token   :string
+#  role_id         :integer
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
-#  role_id         :integer
 #
 
 class User < ApplicationRecord
@@ -32,6 +34,9 @@ class User < ApplicationRecord
   belongs_to :role
   has_many :social_auths, dependent: :destroy
   has_many :projects, inverse_of: :user, dependent: :destroy
+  has_many :project_backers
+  has_many :backed_projects, through: :project_backers, dependent: :destroy
+
   has_one :draft_project, -> { where(approved: false) }, class_name: 'Project'
 
   def assign_default_role

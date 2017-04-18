@@ -6,7 +6,8 @@ class CreateProjects < ActiveRecord::Migration[5.0]
       t.integer :user_id
       t.string :image_url
       t.string :video_url
-      t.integer :goal_amount
+      t.integer :pledged_amount
+      t.integer :funded_amount
       t.string :funding_model
       t.datetime :start_date
       t.integer :duration
@@ -14,5 +15,8 @@ class CreateProjects < ActiveRecord::Migration[5.0]
 
       t.timestamps
     end
+
+    add_index :projects, :category_id
+    add_index :projects, :user_id
   end
 end
