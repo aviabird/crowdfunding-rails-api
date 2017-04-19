@@ -20,6 +20,8 @@
 
 class Project < ApplicationRecord
   
+  attr_accessor :testing
+
   include AASM
 
   aasm do
@@ -52,18 +54,19 @@ class Project < ApplicationRecord
   has_many :faqs, inverse_of: :project, dependent: :destroy
   has_many :links, inverse_of: :project, dependent: :destroy
   has_one :story, inverse_of: :project, dependent: :destroy
+ 
   has_many :project_backers, dependent: :destroy
-  has_many :users, through: :project_backers
+  has_many :backers, through: :project_backers
 
   before_update :update_user_role, if: -> (model) {model.approved_changed? && model.approved}
 
   belongs_to :category
-  belongs_to :user, inverse_of: :self_projects
+  belongs_to :user, inverse_of: :projects
   accepts_nested_attributes_for :story, :rewards, :faqs, :links, :allow_destroy => true
 
   def self.draft(user)
     category = Category.find_by_name("Art")
-    project = user.projects.build(category_id: category.id)
+    project = Project.new(category_id: category.id, user_id: user.id)
     project.rewards.build
     project.faqs.build
     project.links.build
