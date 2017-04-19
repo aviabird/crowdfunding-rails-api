@@ -20,8 +20,6 @@
 
 class Project < ApplicationRecord
   
-  attr_accessor :testing
-
   include AASM
 
   aasm do

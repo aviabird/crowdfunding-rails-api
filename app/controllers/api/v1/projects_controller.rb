@@ -26,7 +26,9 @@ module Api
       end
 
       def launch
-        @project.launch_project
+        status = @project.launch_project
+        @project.save if status
+        render json: { status: status }
       end
 
       def get_draft_project
