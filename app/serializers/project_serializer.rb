@@ -42,7 +42,11 @@ class ProjectSerializer < ActiveModel::Serializer
   end
 
   def percent_funded
-    (object.funded_amount.to_f/object.pledged_amount) * 100
+    if(object.pledged_amount)
+      (object.funded_amount.to_f/object.pledged_amount) * 100
+    else
+      0
+    end
   end
 
 end
