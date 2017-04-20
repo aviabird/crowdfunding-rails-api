@@ -4,6 +4,7 @@
 #
 #  id             :integer          not null, primary key
 #  title          :string
+#  aasm_state     :string
 #  category_id    :integer
 #  user_id        :integer
 #  image_url      :string

@@ -4,6 +4,7 @@
 #
 #  id             :integer          not null, primary key
 #  title          :string
+#  aasm_state     :string
 #  category_id    :integer
 #  user_id        :integer
 #  image_url      :string
@@ -51,10 +52,10 @@ class Project < ApplicationRecord
   has_many :rewards, inverse_of: :project, dependent: :destroy
   has_many :faqs, inverse_of: :project, dependent: :destroy
   has_many :links, inverse_of: :project, dependent: :destroy
-  has_one :story, inverse_of: :project, dependent: :destroy
- 
   has_many :project_backers, dependent: :destroy
   has_many :backers, through: :project_backers
+  has_many :funding_transactions
+  has_one :story, inverse_of: :project, dependent: :destroy
 
   before_update :update_user_role, if: -> (model) {model.approved_changed? && model.approved}
 

@@ -2,12 +2,12 @@ module Api
   module V1
     class ProjectsController < ApplicationController
 
-      before_action :authenticate_request, only: [:create, :get_draft_project]
-      before_action :find_project, only: [:show, :update, :launch, :destroy, :show]
+      before_action :authenticate_request, only: [:create, :get_draft_project, :fund_project]
+      before_action :find_project, only: [:show, :update, :launch, :destroy, :show, :fund_project]
       rescue_from ActiveRecord::RecordNotFound, with: :not_found
 
       def index
-        @projects = Project.all
+        @projects = Project.all.where(aasm_state: "funding")
         render json: @projects, status: :ok
       end
 
@@ -37,6 +37,18 @@ module Api
           project = Project.draft(current_user)
         end
         render json: project, status: :ok
+      end
+
+      def fund_project
+        token = params[:stripeToken]
+        amount = params[:amount]
+        command = CreateCharge.call(token, amount, @current_user.id, @project)
+        
+        if command.success?
+          render json: { message: "You have successfully backed this project" }
+        else
+          render json: { error: command.errors }
+        end
       end
 
       def update 

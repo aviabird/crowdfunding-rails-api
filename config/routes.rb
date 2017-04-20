@@ -3,14 +3,24 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: { format: 'json' } do
     namespace :v1 do
+      # routes for authentication controller for handling email login and tokens
       post '/authenticate', to: 'authentication#authenticate'
       get '/validate_token', to: 'authentication#set_user_by_token'
+
+      # routes for auth controller for handling social logins
+      post 'auth/:provider', to: 'auth#authenticate'
+
+      #routes for users controller
       post '/users', to: 'users#create'
       get '/users/confirm_email', to: 'users#confirm_email'
-      post 'auth/:provider', to: 'auth#authenticate'
+      
+      #routes for projects controller 
+      post 'projects/fund_project', to: 'projects#fund_project'
       get 'projects/draft', to: 'projects#get_draft_project'
       post 'projects/launch', to: 'projects#launch'
       resources :projects, only: [:create, :index, :update, :destroy, :show]
+
+      #routes for category controller
       resources :category, only: :index
     end
   end
