@@ -11,7 +11,7 @@ class CreateCharge
   def call
     create_charge
     if @charge && @charge["status"] == "succeeded"
-      increase_project_funded_amount
+      increase_project_funded_amount_and_backers
       add_charge_to_funding_transactions
       add_to_project_backers
     else
@@ -34,8 +34,9 @@ class CreateCharge
       errors.add :card_error, e.message 
   end
 
-  def increase_project_funded_amount
+  def increase_project_funded_amount_and_backers
     @project.funded_amount += @amount
+    @project.total_backers += 1
     @project.save
   end
 

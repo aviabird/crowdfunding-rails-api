@@ -13,7 +13,7 @@ class CreateFutureDonor
     create_a_customer
     if @customer
       save_customer_to_charge_in_future
-      increase_project_funded_amount
+      increase_project_funded_amount_and_backers
     else
       nil
     end
@@ -38,8 +38,9 @@ class CreateFutureDonor
     )
   end
 
-  def increase_project_funded_amount
+  def increase_project_funded_amount_and_backers
     @project.funded_amount += @amount
+    @project.total_backers += 1
     @project.save
   end
 

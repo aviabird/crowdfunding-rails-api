@@ -10,7 +10,8 @@
 #  image_url      :string
 #  video_url      :string
 #  pledged_amount :integer
-#  funded_amount  :integer
+#  funded_amount  :integer          default(0)
+#  total_backers  :integer          default(0)
 #  funding_model  :string
 #  start_date     :datetime
 #  duration       :integer
@@ -35,10 +36,6 @@ class ProjectSerializer < ActiveModel::Serializer
 
   def user_name
     object.user.name
-  end
-
-  def total_backers
-    object.backers.count
   end
 
   def percent_funded

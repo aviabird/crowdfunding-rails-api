@@ -9,6 +9,7 @@ class CreateProjects < ActiveRecord::Migration[5.0]
       t.string :video_url
       t.integer :pledged_amount
       t.integer :funded_amount, default: 0
+      t.integer :total_backers, default: 0
       t.string :funding_model
       t.datetime :start_date
       t.integer :duration
