@@ -20,6 +20,10 @@ Rails.application.routes.draw do
       post 'projects/launch', to: 'projects#launch'
       resources :projects, only: [:create, :index, :update, :destroy, :show]
 
+      #routes for comments controller
+      get 'comments/:project_id', to: 'comments#index'
+      resources :comments, only: [:create, :update, :destroy]
+
       #routes for category controller
       resources :category, only: :index
     end

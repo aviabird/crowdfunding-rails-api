@@ -37,6 +37,7 @@ class User < ApplicationRecord
   has_many :project_backers, dependent: :destroy
   has_many :backed_projects, through: :project_backers
   has_many :funding_transactions
+  has_many :comments, dependent: :destroy
   has_one :draft_project, -> { where(aasm_state: "draft") }, class_name: 'Project'
 
   def assign_default_role

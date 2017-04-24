@@ -58,6 +58,7 @@ class Project < ApplicationRecord
   has_many :funding_transactions
   has_many :future_donors
   has_one :story, inverse_of: :project, dependent: :destroy
+  has_many :comments, dependent: :destroy
 
   before_update :update_user_role, if: -> (model) {model.approved_changed? && model.approved}
 
