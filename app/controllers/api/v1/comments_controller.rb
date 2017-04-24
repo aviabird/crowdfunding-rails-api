@@ -6,7 +6,7 @@ module Api
       before_action :find_comment, only: [:update, :destroy]
 
       def index
-        comments = @project.comments.all
+        comments = @project.comments
         render json: comments, status: :ok 
       end
 
