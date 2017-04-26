@@ -22,6 +22,15 @@ module Api
         end
       end
 
+      def update
+        if @comment.update(comment_params)
+          render json: @comment, status: :ok
+        else
+          render json: { errors: @comment.errors }
+        end
+      end
+
+
       def destroy
         comment = @comment.destroy
         if comment
