@@ -16,7 +16,9 @@
 #
 
 class UserSerializer < ActiveModel::Serializer
-  attributes :id, :name, :image_url, :email
+  attributes :id, :name, :image_url, :email, :secondary_email
+
+  has_one :address
 
   def image_url
     return object.image_url if object.image_url
