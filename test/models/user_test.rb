@@ -12,6 +12,7 @@
 #  role_id         :integer
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
+#  secondary_email :string
 #
 
 require 'test_helper'

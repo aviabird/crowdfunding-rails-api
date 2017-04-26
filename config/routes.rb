@@ -11,8 +11,9 @@ Rails.application.routes.draw do
       post 'auth/:provider', to: 'auth#authenticate'
 
       #routes for users controller
-      post '/users', to: 'users#create'
       get '/users/confirm_email', to: 'users#confirm_email'
+      post '/users/update_profile_pic', to: 'users#update_profile_pic'
+      resources :users, only: [:create, :show, :update]
       
       #routes for projects controller 
       post 'projects/fund_project', to: 'projects#fund_project'
