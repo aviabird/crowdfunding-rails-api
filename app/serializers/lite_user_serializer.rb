@@ -21,8 +21,10 @@
 #  total_backed_amount :integer          default(0)
 #
 
-class AuthUserSerializer < ActiveModel::Serializer
-  attributes :id, :name, :image_url, :email
+class LiteUserSerializer < ActiveModel::Serializer
+  attributes :id, :name, :image_url, :email, :total_backed_amount, :phone_no
+
+  has_one :address
 
   def image_url
     return object.image_url if object.image_url

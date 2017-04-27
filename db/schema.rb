@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170427050406) do
+ActiveRecord::Schema.define(version: 20170427101634) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -183,16 +183,18 @@ ActiveRecord::Schema.define(version: 20170427050406) do
     t.string   "email"
     t.string   "image_url"
     t.string   "password_digest"
-    t.boolean  "email_confirmed", default: false
+    t.boolean  "email_confirmed",     default: false
     t.string   "confirm_token"
     t.integer  "role_id"
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
     t.string   "secondary_email"
     t.string   "facebook_url"
     t.string   "twitter_url"
     t.string   "instagram_url"
     t.string   "google_plus_url"
+    t.string   "phone_no"
+    t.integer  "total_backed_amount", default: 0
     t.index ["role_id"], name: "index_users_on_role_id", using: :btree
   end
 
