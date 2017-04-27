@@ -13,17 +13,10 @@
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #  secondary_email :string
-#  facebook_url    :string
-#  twitter_url     :string
-#  instagram_url   :string
-#  google_plus_url :string
 #
 
-class UserSerializer < ActiveModel::Serializer
-  attributes :id, :name, :image_url, :email, :secondary_email,
-             :facebook_url, :twitter_url, :instagram_url, :google_plus_url
-
-  has_one :address
+class AuthUserSerializer < ActiveModel::Serializer
+  attributes :id, :name, :image_url, :email
 
   def image_url
     return object.image_url if object.image_url
@@ -31,4 +24,3 @@ class UserSerializer < ActiveModel::Serializer
   end
 
 end
-

@@ -10,14 +10,14 @@ class Api::V1::AuthenticationController < ApplicationController
       if command.success?
         result = command.result
         response.set_header("Authorization", result[:auth_token])
-        render json: result[:user], serializer: UserSerializer, status: :ok
+        render json: result[:user], serializer: AuthUserSerializer, status: :ok
       else
         render json: { error: command.errors }
       end
     end
 
     def set_user_by_token
-      render json: current_user, serializer: UserSerializer, status: :ok
+      render json: current_user, serializer: AuthUserSerializer, status: :ok
     end
 
 end

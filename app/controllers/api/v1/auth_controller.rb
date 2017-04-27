@@ -23,7 +23,7 @@ module Api
       def render_success
         token = JsonWebToken.encode(user_id: @user.id)
         response.set_header("Authorization", token)
-        render json: @user, serializer: UserSerializer, status: :ok
+        render json: @user, serializer: AuthUserSerializer, status: :ok
       end
 
     end

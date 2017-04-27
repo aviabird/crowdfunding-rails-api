@@ -4,7 +4,7 @@ class Api::V1::UsersController < ApplicationController
   before_action :find_user, only: [:update, :show]
 
   def create
-    user = User.new(user_params)
+    user = User.new(auth_params)
     if user.save
       UserMailer.registration_confirmation(user).deliver
       render json: { message: "A Confirmation email has bent sent to #{user.email}, please confirm it " }
@@ -45,10 +45,6 @@ class Api::V1::UsersController < ApplicationController
     end
   end
 
-  def update_user_address
-
-  end
-
   def update
     if @user.update(user_params)
       render json: @user, status: :ok
@@ -59,12 +55,16 @@ class Api::V1::UsersController < ApplicationController
 
   private
 
-  def user_params
-    params.require(:user).permit(:id, :name, :email, :secondary_email, :password, :password_confirmation, :image_url,
-      address_attributes: [:street_address, :city, :postcode, :country]
-    )
+  def auth_params
+    params.require(:user).permit(:name, :email, :password, :password_confirmation)
   end
 
+  def user_params
+    params.require(:user).permit(:id, :name, :email, :secondary_email, :password, :image_url,
+      :facebook_url, :twitter_url, :instagram_url, :google_plus_url,
+      address_attributes: [:id, :street_address, :city, :postcode, :country],
+    )
+  end
 
   def find_user
     @user = User.find(params[:id])

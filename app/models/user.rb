@@ -13,6 +13,10 @@
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #  secondary_email :string
+#  facebook_url    :string
+#  twitter_url     :string
+#  instagram_url   :string
+#  google_plus_url :string
 #
 
 class User < ApplicationRecord
@@ -25,9 +29,11 @@ class User < ApplicationRecord
   validates :email, presence: true, length: { maximum: 255 },
                     format: { with: VALID_EMAIL_REGEX },
                     uniqueness: { case_sensitive: false }
-  # validates :secondary_email, length: { maximum: 255 },
-  #                             format: { with: VALID_EMAIL_REGEX }
-  # validates :password, presence: true, length: { minimum: 8 }
+  validates :secondary_email, length: { maximum: 255 },
+                              format: { with: VALID_EMAIL_REGEX },
+                              uniqueness: { case_sensitive: false },
+                              allow_nil: true
+  validates :password, presence: true, confirmation: true, length: { minimum: 8 }, on: :create
 
   before_create :confirmation_token
   before_validation :assign_default_role, unless: -> (model) { model.role_id }
@@ -43,10 +49,9 @@ class User < ApplicationRecord
   has_many :comments, dependent: :destroy
 
   has_one :draft_project, -> { where(aasm_state: "draft") }, class_name: 'Project'
-  has_one :address, inverse_of: :user, dependent: :destroy
+  has_one :address, dependent: :destroy
 
-  accepts_nested_attributes_for :address
-
+  accepts_nested_attributes_for :address, :allow_destroy => true
 
   def assign_default_role
     role = Role.find_by_name("donor")

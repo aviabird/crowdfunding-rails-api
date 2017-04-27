@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170426090845) do
+ActiveRecord::Schema.define(version: 20170427050406) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -189,6 +189,10 @@ ActiveRecord::Schema.define(version: 20170426090845) do
     t.datetime "created_at",                      null: false
     t.datetime "updated_at",                      null: false
     t.string   "secondary_email"
+    t.string   "facebook_url"
+    t.string   "twitter_url"
+    t.string   "instagram_url"
+    t.string   "google_plus_url"
     t.index ["role_id"], name: "index_users_on_role_id", using: :btree
   end
 

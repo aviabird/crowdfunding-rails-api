@@ -13,6 +13,10 @@
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #  secondary_email :string
+#  facebook_url    :string
+#  twitter_url     :string
+#  instagram_url   :string
+#  google_plus_url :string
 #
 
 require 'test_helper'
