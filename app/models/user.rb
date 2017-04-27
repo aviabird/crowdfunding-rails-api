@@ -125,7 +125,7 @@ class User < ApplicationRecord
 
   #Get all backers who have backed user projects
   def backers
-    self.projects.map{ |project| project.backers }.flatten.uniq
+    self.projects.map{ |project| project.backers.includes(:address) }.flatten.uniq
   end
 
   private
