@@ -11,6 +11,12 @@ module Api
         render json: @projects, status: :ok
       end
 
+      def search_by_category
+        category = Category.find_by_name(params[:category])
+        @projects = Project.where(category: category, aasm_state: "funding")
+        render json: @projects, status: :ok
+      end
+
       def create
         result = ProjectService::CreateProject.call(params)
         project = result[:model]
