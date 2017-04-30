@@ -2,7 +2,7 @@ module Api
   module V1
     class ProjectsController < ApplicationController
 
-      before_action :authenticate_request, only: [:create, :get_draft_project, :fund_project]
+      before_action :authenticate_request, only: [:create, :get_draft_project, :fund_project, :launch]
       before_action :find_project, only: [:show, :update, :launch, :destroy, :show, :fund_project]
       rescue_from ActiveRecord::RecordNotFound, with: :not_found
 
@@ -33,7 +33,13 @@ module Api
 
       def launch
         status = @project.launch_project
-        @project.save if status
+        if status
+          @project.save
+          current_user.notifications.create(
+            subject: 'Project Launch',
+            description: 'Your project was successfully launched, we will notify you once the project is approved by the admin'
+          )
+        end
         render json: { status: status }
       end
 
@@ -51,7 +57,7 @@ module Api
         funding_type = @project.funding_model
 
         command = if(funding_type == "flexi")
-          CreateCharge.call(token, amount, @current_user.id, @project) 
+          CreateCharge.call(token, amount, @current_user, @project) 
         else
           CreateFutureDonor.call(token, amount, @current_user, @project)
         end

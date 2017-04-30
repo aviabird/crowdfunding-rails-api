@@ -28,6 +28,10 @@ Rails.application.routes.draw do
 
       #routes for category controller
       resources :category, only: :index
+
+      #routes for notifications controller
+      put 'notifications/read_notification', to: 'notifications#read_notification'
+
     end
   end
 

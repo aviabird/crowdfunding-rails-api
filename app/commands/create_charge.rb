@@ -1,10 +1,10 @@
 class CreateCharge
   prepend SimpleCommand
 
-  def initialize(token, amount, user_id, project)
+  def initialize(token, amount, user, project)
     @token = token
     @amount = amount.to_i
-    @user_id = user_id
+    @user_id = user.id
     @project = project
   end
 
@@ -14,6 +14,7 @@ class CreateCharge
       increase_project_funded_amount_and_backers
       add_charge_to_funding_transactions
       add_to_project_backers
+      create_notification
     else
       nil
     end
@@ -60,6 +61,10 @@ class CreateCharge
       user_id: @user_id,
       project_id: @project.id
     )
+  end
+
+  def create_notification
+    Notification.create(user_id: @project.user_id, subject: 'Project Funded', description: "Your project was funded with amount #{@amount}")
   end
 
 end

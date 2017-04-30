@@ -38,6 +38,7 @@ class User < ApplicationRecord
   validates :password, presence: true, confirmation: true, length: { minimum: 8 }, on: :create
 
   before_create :confirmation_token
+  after_create :create_welcome_notification
   before_validation :assign_default_role, unless: -> (model) { model.role_id }
 
   delegate :name, to: :role, prefix: true
@@ -49,9 +50,11 @@ class User < ApplicationRecord
   has_many :backed_projects, through: :project_backers
   has_many :funding_transactions
   has_many :comments, dependent: :destroy
+  has_many :notifications, dependent: :destroy
 
   has_one :draft_project, -> { where(aasm_state: "draft") }, class_name: 'Project'
   has_one :address, dependent: :destroy
+
 
   accepts_nested_attributes_for :address, :allow_destroy => true
 
@@ -136,5 +139,8 @@ class User < ApplicationRecord
     end
   end
 
+  def create_welcome_notification
+    self.notifications.create(subject: 'Welcome Message', description: 'Welcome to the CrowdPouch')
+  end
 
 end

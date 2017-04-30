@@ -92,7 +92,7 @@ ActiveRecord::Schema.define(version: 20170430052646) do
 
   create_table "notifications", force: :cascade do |t|
     t.string   "subject"
-    t.string   "description"
+    t.text     "description"
     t.boolean  "read_status", default: false
     t.datetime "read_at"
     t.integer  "user_id"

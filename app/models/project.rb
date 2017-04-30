@@ -79,6 +79,11 @@ class Project < ApplicationRecord
   end
 
   def update_user_role
+    Notification.create(
+      user_id: self.user_id,
+      subject: 'Project Approval',
+      description: 'Your project was approved by the admin, now donors can fund into your project'
+    )
     self.approve_project
     self.user.update_user_role_to_creator
   end

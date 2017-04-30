@@ -22,11 +22,15 @@
 #
 
 class AuthUserSerializer < ActiveModel::Serializer
-  attributes :id, :name, :image_url, :email
-
+  attributes :id, :name, :image_url, :email, :notifications_count
+  
   def image_url
     return object.image_url if object.image_url
     return "http://lh3.googleusercontent.com/-XdUIqdMkCWA/AAAAAAAAAAI/AAAAAAAAAAA/4252rscbv5M/photo.jpg"
+  end
+
+  def notifications_count
+    object.notifications.where(read_status: false).count
   end
 
 end

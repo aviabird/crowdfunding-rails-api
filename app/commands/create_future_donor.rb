@@ -14,6 +14,7 @@ class CreateFutureDonor
     if @customer
       save_customer_to_charge_in_future
       increase_project_funded_amount_and_backers
+      create_notification
     else
       nil
     end
@@ -42,6 +43,10 @@ class CreateFutureDonor
     @project.funded_amount += @amount
     @project.total_backers += 1
     @project.save
+  end
+
+  def create_notification
+    Notification.create(user_id: @project.user_id, subject: 'Project Funded', description: "Your project was funded with amount #{@amount}")
   end
 
 end

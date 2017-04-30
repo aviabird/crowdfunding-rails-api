@@ -15,4 +15,16 @@
 class FundingTransaction < ApplicationRecord
   belongs_to :user
   belongs_to :project
+
+  after_create :create_notification
+
+
+  def create_notification
+    Notification.create(
+      user_id: self.user_id,
+      subject: 'Card Charge',
+      description: 'Your card was charged for the project you funded'
+    )
+  end
+
 end

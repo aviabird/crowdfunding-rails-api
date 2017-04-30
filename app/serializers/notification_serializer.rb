@@ -12,10 +12,6 @@
 #  updated_at  :datetime         not null
 #
 
-require 'test_helper'
-
-class NotificationTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+class NotificationSerializer < ActiveModel::Serializer
+  attributes :id, :subject, :description, :read_status, :read_at, :created_at
 end
