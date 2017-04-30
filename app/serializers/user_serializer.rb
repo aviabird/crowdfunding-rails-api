@@ -30,6 +30,7 @@ class UserSerializer < ActiveModel::Serializer
   has_many :projects, serializer: LiteProjectSerializer
   has_many :backed_projects, serializer: LiteProjectSerializer
   has_many :notifications
+  has_one :project_in_funding_state, serializer: LiteProjectSerializer
 
   def image_url
     return object.image_url ? object.image_url : "http://lh3.googleusercontent.com/-XdUIqdMkCWA/AAAAAAAAAAI/AAAAAAAAAAA/4252rscbv5M/photo.jpg"

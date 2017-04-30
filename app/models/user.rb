@@ -54,7 +54,7 @@ class User < ApplicationRecord
 
   has_one :draft_project, -> { where(aasm_state: "draft") }, class_name: 'Project'
   has_one :address, dependent: :destroy
-
+  has_one :project_in_funding_state, -> { where(aasm_state: "funding") }, class_name: 'Project'
 
   accepts_nested_attributes_for :address, :allow_destroy => true
 
