@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  subject: MyString
+  description: MyString
+  read_status: false
+  read_at: 
+
+two:
+  subject: MyString
+  description: MyString
+  read_status: false
+  read_at: 
