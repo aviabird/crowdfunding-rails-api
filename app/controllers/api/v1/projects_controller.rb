@@ -31,6 +31,12 @@ module Api
         render json: @project, status: :ok
       end
 
+      def view_project_from_mail
+        id = params[:id]
+        redirect_url = Rails.configuration.email_confirmation['redirect_url']
+        redirect_to "#{redirect_url}/projects/#{id}"           
+      end
+
       def launch
         status = @project.launch_project
         if status

@@ -9,4 +9,11 @@ class UserMailer < ApplicationMailer
     @user = user
     mail(:to => "#{user.name} <#{user.email}>", :subject => "Registration Confirmation")
   end
+
+  def project_approved(project)
+    @project = project
+    @user = project.user
+    mail(:to => "#{@user.name} <#{@user.email}>", :subject => "Project Approval")
+  end
+
 end

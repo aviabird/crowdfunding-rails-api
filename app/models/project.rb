@@ -37,7 +37,7 @@ class Project < ApplicationRecord
     end
 
     event :approve_project do
-      transitions :from => :pending_approval, :to => :funding
+      transitions :from => :pending_approval, :to => :funding, :after => :send_project_approval_mail
     end
 
     event :project_funded do
@@ -86,6 +86,10 @@ class Project < ApplicationRecord
     )
     self.approve_project
     self.user.update_user_role_to_creator
+  end
+
+  def send_project_approval_mail
+    UserMailer.project_approved(self).deliver
   end
 
 end

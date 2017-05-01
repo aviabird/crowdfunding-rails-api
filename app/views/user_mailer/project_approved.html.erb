@@ -1,0 +1,5 @@
+Hi <%= @user.name %>,
+
+Your Project has been approved, click on the link below to view project
+
+<%= link_to "#{@project.title}", api_v1_projects_view_project_from_mail_url(id: @project.id) %>

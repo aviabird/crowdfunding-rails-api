@@ -16,6 +16,7 @@ Rails.application.routes.draw do
       resources :users, only: [:create, :show, :update]
       
       #routes for projects controller 
+      get 'projects/view_project_from_mail', to: 'projects#view_project_from_mail'
       post 'projects/fund_project', to: 'projects#fund_project'
       get 'projects/draft', to: 'projects#get_draft_project'
       post 'projects/launch', to: 'projects#launch'
