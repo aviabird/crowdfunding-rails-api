@@ -2,8 +2,8 @@ module Api
   module V1
     class ProjectsController < ApplicationController
 
-      before_action :authenticate_request, only: [:create, :get_draft_project, :fund_project, :launch]
-      before_action :find_project, only: [:show, :update, :launch, :destroy, :show, :fund_project]
+      before_action :authenticate_request, only: [:create, :update, :get_draft_project, :fund_project, :launch]
+      before_action :find_project, only: [:show, :launch, :destroy, :show, :fund_project]
       rescue_from ActiveRecord::RecordNotFound, with: :not_found
 
       def index
@@ -19,6 +19,16 @@ module Api
 
       def create
         result = ProjectService::CreateProject.call(params)
+        project = result[:model]
+        if result[:status]
+          render json: project, status: :created
+        else
+          render json: project.errors, status: :unprocessable_entity
+        end
+      end
+
+      def update 
+        result = ProjectService::UpdateProject.call(params)
         project = result[:model]
         if result[:status]
           render json: project, status: :created
@@ -77,14 +87,6 @@ module Api
         end
       end
 
-      def update 
-        if @project.update(project_params)
-          render json: @project, status: :ok
-        else
-          render json: @project.errors, status: :unprocessable_entity
-        end
-      end
-
       def destroy
         if @project.destroy
           render json: { message: "project deleted" }, status: :ok
@@ -97,6 +99,17 @@ module Api
 
       def find_project
         @project = Project.find(params[:id])
+      end
+
+      def update_params
+        params.permit(
+          :video_url, :image_url, :category_id,
+          rewards_attributes: [:id, :title, :description, :image_url, :amount],
+          story_attributes: [:id, sections_attributes: [:id, :heading, :description] ],
+          faqs_attributes: [:id, :question, :answer],
+          links_attributes: [:id, :url],
+          events_attributes: [:id, :title, :country, :date, :image_url, :description]
+        )
       end
 
     end
