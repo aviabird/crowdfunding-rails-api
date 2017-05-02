@@ -8,13 +8,13 @@ module Api
 
       def index
         @projects = Project.all.where(aasm_state: "funding")
-        render json: @projects, status: :ok
+        render json: @projects, each_serializer: LiteProjectSerializer, status: :ok
       end
 
       def search_by_category
         category = Category.find_by_name(params[:category])
         @projects = Project.where(category: category, aasm_state: "funding")
-        render json: @projects, status: :ok
+        render json: @projects, each_serializer: LiteProjectSerializer , status: :ok
       end
 
       def create
