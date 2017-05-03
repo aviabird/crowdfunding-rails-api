@@ -25,6 +25,8 @@ class LiteProjectSerializer < ActiveModel::Serializer
              :category_name, :user_name, :total_backers
 
 
+  has_many :pictures
+
   def category_name
     object.category.name
   end

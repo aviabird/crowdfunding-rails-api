@@ -49,6 +49,7 @@ class Project < ApplicationRecord
 
   end
 
+  has_many :pictures, as: :imageable, dependent: :destroy
   has_many :rewards, inverse_of: :project, dependent: :destroy
   has_many :faqs, inverse_of: :project, dependent: :destroy
   has_many :links, inverse_of: :project, dependent: :destroy
@@ -63,16 +64,11 @@ class Project < ApplicationRecord
 
   belongs_to :category
   belongs_to :user, inverse_of: :projects
-  accepts_nested_attributes_for :story, :rewards, :faqs, :links, :allow_destroy => true
+  accepts_nested_attributes_for :pictures, :story, :rewards, :faqs, :links, :allow_destroy => true
 
   def self.draft(user)
     category = Category.find_by_name("Art")
     project = Project.new(category_id: category.id, user_id: user.id)
-    # project.rewards.build
-    # project.faqs.build
-    # project.links.build
-    # project.build_story
-    # project.story.sections.build
     project.save
     project
   end

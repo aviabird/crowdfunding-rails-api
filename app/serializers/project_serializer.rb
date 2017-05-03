@@ -24,6 +24,7 @@ class ProjectSerializer < ActiveModel::Serializer
              :funded_amount, :percent_funded, :funding_model, :start_date, :duration, :category_id,
              :category_name, :user_name, :total_backers
 
+  has_many :pictures
   has_many :rewards
   has_many :faqs
   has_many :links

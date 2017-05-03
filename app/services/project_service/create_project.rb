@@ -37,7 +37,8 @@ module ProjectService
 
     def project_attributes
       [
-        :id, :title, :video_url, :image_url, :pledged_amount, :funding_model, :duration, :category_id,
+        :id, :title, :video_url, :pledged_amount, :funding_model, :duration, :category_id,
+        pictures_attributes: [:id, :url, :_destroy],
         rewards_attributes: [:id, :title, :description, :image_url, :amount, :_destroy],
         story_attributes: [:id, sections_attributes: [:id, :heading, :description] ],
         faqs_attributes: [:id, :question, :answer],
@@ -49,7 +50,7 @@ module ProjectService
     def perform_image_upload_callbacks
       case @type
       when 'project'
-        upload_project_image
+        upload_project_images
       when 'story'
         upload_story_images
       when 'reward'
@@ -57,10 +58,16 @@ module ProjectService
       end
     end
 
-    def upload_project_image
-      image_data = @params[:image_data]
-      return if image_data == ""
-      @project.image_url = upload_image(image_data)
+    def upload_project_images
+      images_data = @params[:images_data]
+      return if images_data.length == 0
+      images_data.each do |image_data|
+        command = ImageUpload.call(image_data)
+        if command.success?
+          url = command.result
+          @project.pictures << Picture.new(url: url)
+        end
+      end
     end
 
     def upload_story_images
