@@ -33,6 +33,10 @@ Rails.application.routes.draw do
       #routes for notifications controller
       put 'notifications/read_notification', to: 'notifications#read_notification'
 
+      #routes for stripe controller
+      post 'pay_by_sofort', to: 'stripe#sofort_payments'
+      post 'webhook', to: 'stripe#webhook'
+
     end
   end
 

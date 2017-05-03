@@ -1,4 +1,4 @@
-class CreateCharge
+class SofortPayment
   prepend SimpleCommand
 
   def initialize(token, amount, user, project)
@@ -10,11 +10,8 @@ class CreateCharge
 
   def call
     create_charge
-    if @charge && @charge["status"] == "succeeded"
-      increase_project_funded_amount_and_backers
-      add_charge_to_funding_transactions
-      add_to_project_backers
-      create_notification
+    if @charge && @charge["status"] == "pending"
+      "Thanks for backing up this project, Your payment may take upto 14 days to confirm, we will notify you once your payment is confirmed"
     else
       nil
     end
@@ -23,16 +20,13 @@ class CreateCharge
   private
 
   def create_charge
-    amount = @amount * 100 # since stripe accepts amount in lowest denomination
+    amount = @amount * 100
     @charge = Stripe::Charge.create(
       :amount => amount,
       :currency => "eur",
       :description => "Example charge",
       :source => @token,
     )
-
-    rescue Stripe::CardError => e
-      errors.add :card_error, e.message 
   end
 
   def increase_project_funded_amount_and_backers
