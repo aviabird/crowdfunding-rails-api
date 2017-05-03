@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170503155715) do
+ActiveRecord::Schema.define(version: 20170503160011) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -138,7 +138,6 @@ ActiveRecord::Schema.define(version: 20170503155715) do
     t.string   "aasm_state"
     t.integer  "category_id"
     t.integer  "user_id"
-    t.string   "image_url"
     t.string   "video_url"
     t.integer  "pledged_amount"
     t.integer  "funded_amount",  default: 0

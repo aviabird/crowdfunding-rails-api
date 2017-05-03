@@ -7,7 +7,6 @@
 #  aasm_state     :string
 #  category_id    :integer
 #  user_id        :integer
-#  image_url      :string
 #  video_url      :string
 #  pledged_amount :integer
 #  funded_amount  :integer          default(0)
@@ -21,7 +20,7 @@
 #
 
 class LiteProjectSerializer < ActiveModel::Serializer
-  attributes :id, :title, :image_url, :video_url, :pledged_amount,
+  attributes :id, :title, :video_url, :pledged_amount,
              :funded_amount, :percent_funded, :funding_model, :start_date, :duration, :category_id,
              :category_name, :user_name, :total_backers
 

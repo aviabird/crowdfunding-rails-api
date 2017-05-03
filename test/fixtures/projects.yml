@@ -7,7 +7,6 @@
 #  aasm_state     :string
 #  category_id    :integer
 #  user_id        :integer
-#  image_url      :string
 #  video_url      :string
 #  pledged_amount :integer
 #  funded_amount  :integer          default(0)
