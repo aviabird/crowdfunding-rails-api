@@ -69,11 +69,11 @@ class Project < ApplicationRecord
   def self.draft(user)
     category = Category.find_by_name("Art")
     project = Project.new(category_id: category.id, user_id: user.id)
-    project.rewards.build
-    project.faqs.build
-    project.links.build
-    project.build_story
-    project.story.sections.build
+    # project.rewards.build
+    # project.faqs.build
+    # project.links.build
+    # project.build_story
+    # project.story.sections.build
     project.save
     project
   end

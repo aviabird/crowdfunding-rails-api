@@ -38,7 +38,7 @@ module ProjectService
     def project_attributes
       [
         :id, :title, :video_url, :image_url, :pledged_amount, :funding_model, :duration, :category_id,
-        rewards_attributes: [:id, :title, :description, :image_url, :amount],
+        rewards_attributes: [:id, :title, :description, :image_url, :amount, :_destroy],
         story_attributes: [:id, sections_attributes: [:id, :heading, :description] ],
         faqs_attributes: [:id, :question, :answer],
         links_attributes: [:id, :url],
