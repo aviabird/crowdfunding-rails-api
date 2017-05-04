@@ -20,7 +20,7 @@
 #
 
 class ProjectSerializer < ActiveModel::Serializer
-  attributes :id, :title, :video_url, :pledged_amount,
+  attributes :id, :title, :video_url, :pledged_amount, :currency,
              :funded_amount, :percent_funded, :funding_model, :start_date, :duration, :category_id,
              :category_name, :user_name, :total_backers
 

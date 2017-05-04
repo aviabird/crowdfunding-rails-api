@@ -64,7 +64,8 @@ class Project < ApplicationRecord
 
   belongs_to :category
   belongs_to :user, inverse_of: :projects
-  accepts_nested_attributes_for :pictures, :story, :rewards, :faqs, :links, :allow_destroy => true
+  accepts_nested_attributes_for :story
+  accepts_nested_attributes_for :pictures, :rewards, :faqs, :links, :allow_destroy => true
 
   def self.draft(user)
     category = Category.find_by_name("Art")

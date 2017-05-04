@@ -20,12 +20,9 @@
 #
 
 class LiteProjectSerializer < ActiveModel::Serializer
-  attributes :id, :title, :video_url, :pledged_amount,
-             :funded_amount, :percent_funded, :funding_model, :start_date, :duration, :category_id,
-             :category_name, :user_name, :total_backers
-
-
-  has_many :pictures
+  attributes :id, :title, :video_url, :pledged_amount, :funded_amount, :percent_funded, 
+             :funding_model, :start_date, :duration, :category_id, :category_name, :user_name, 
+             :total_backers, :image_url, :currency
 
   def category_name
     object.category.name
@@ -41,6 +38,10 @@ class LiteProjectSerializer < ActiveModel::Serializer
     else
       0
     end
+  end
+
+  def image_url
+    return object.pictures.size > 0 ? object.pictures.first.url : nil
   end
 
 end
