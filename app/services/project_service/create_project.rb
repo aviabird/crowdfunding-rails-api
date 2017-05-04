@@ -41,8 +41,8 @@ module ProjectService
         pictures_attributes: [:id, :url, :_destroy],
         rewards_attributes: [:id, :title, :description, :amount, :_destroy, :delivery_date, :quantity],
         story_attributes: [:id, sections_attributes: [:id, :heading, :description] ],
-        faqs_attributes: [:id, :question, :answer],
-        links_attributes: [:id, :url],
+        faqs_attributes: [:id, :question, :answer, :_destroy],
+        links_attributes: [:id, :url, :_destroy],
         events_attributes: [:id, :title, :country, :date, :image_url, :description]
       ]  
     end
