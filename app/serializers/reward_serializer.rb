@@ -14,5 +14,5 @@
 #
 
 class RewardSerializer < ActiveModel::Serializer
-  attributes :id, :title, :description, :image_url, :amount
+  attributes :id, :title, :description, :amount, :delivery_date, :quantity
 end

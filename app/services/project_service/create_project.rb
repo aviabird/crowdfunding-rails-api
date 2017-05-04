@@ -39,7 +39,7 @@ module ProjectService
       [
         :id, :title, :video_url, :pledged_amount, :funding_model, :start_date, :duration, :category_id,
         pictures_attributes: [:id, :url, :_destroy],
-        rewards_attributes: [:id, :title, :description, :image_url, :amount, :_destroy],
+        rewards_attributes: [:id, :title, :description, :amount, :_destroy, :delivery_date, :quantity],
         story_attributes: [:id, sections_attributes: [:id, :heading, :description] ],
         faqs_attributes: [:id, :question, :answer],
         links_attributes: [:id, :url],
@@ -53,8 +53,6 @@ module ProjectService
         upload_project_images
       when 'story'
         upload_story_images
-      when 'reward'
-        upload_reward_images
       end
     end
 
@@ -76,14 +74,6 @@ module ProjectService
         return if image_data == ""
         @project.story.sections[index].image_url = upload_image(image_data)
       end
-    end
-
-    def upload_reward_images
-      @params["rewards_attributes"].each_with_index do |reward, index|
-        image_data = reward[:image_data]
-        return if image_data == ""
-        @project.rewards[index].image_url = upload_image(image_data)
-      end 
     end
 
     def upload_image(image_data)
