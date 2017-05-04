@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170503160011) do
+ActiveRecord::Schema.define(version: 20170504082521) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -155,11 +155,12 @@ ActiveRecord::Schema.define(version: 20170503160011) do
   create_table "rewards", force: :cascade do |t|
     t.string   "title"
     t.text     "description"
-    t.string   "image_url"
     t.integer  "amount"
     t.integer  "project_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.datetime "delivery_date"
+    t.integer  "quantity"
     t.index ["project_id"], name: "index_rewards_on_project_id", using: :btree
   end
 
