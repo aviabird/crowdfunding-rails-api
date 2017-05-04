@@ -6,7 +6,7 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-categories = %w(Art Comics Crafts Dance Community Fashion Film Video Food Games Music Photography Publishing Technology Theater)
+categories = %w(Art Comics Crafts Dance Community Fashion Film Video Food Games Music Photography Publishing Technology Theater NonProfit PersonalCause)
 categories.each do |category|
   Category.find_or_create_by(name: category)
 end
