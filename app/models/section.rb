@@ -12,5 +12,5 @@
 #
 
 class Section < ApplicationRecord
-  belongs_to :story, inverse_of: :sections
+  # belongs_to :story, inverse_of: :sections
 end

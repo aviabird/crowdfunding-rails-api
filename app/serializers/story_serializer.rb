@@ -6,10 +6,9 @@
 #  project_id :integer
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  body       :text
 #
 
 class StorySerializer < ActiveModel::Serializer
-  attributes :id
-
-  has_many :sections
+  attributes :id, :body
 end

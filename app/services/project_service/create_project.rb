@@ -40,7 +40,7 @@ module ProjectService
         :id, :title, :video_url, :pledged_amount, :funding_model, :start_date, :duration, :category_id, :currency,
         pictures_attributes: [:id, :url, :_destroy],
         rewards_attributes: [:id, :title, :description, :amount, :_destroy, :delivery_date, :quantity, :currency],
-        story_attributes: [:id, sections_attributes: [:id, :heading, :description, :_destroy] ],
+        story_attributes: [:id, :body ],
         faqs_attributes: [:id, :question, :answer, :_destroy],
         links_attributes: [:id, :url, :_destroy],
         events_attributes: [:id, :title, :country, :date, :image_url, :description]
@@ -51,8 +51,6 @@ module ProjectService
       case @type
       when 'project'
         upload_project_images
-      when 'story'
-        upload_story_images
       end
     end
 
@@ -64,18 +62,6 @@ module ProjectService
         if command.success?
           url = command.result
           @project.pictures << Picture.new(url: url)
-        end
-      end
-    end
-
-    def upload_story_images
-      @params["story_attributes"]["sections_attributes"].each_with_index do |section, index|
-        image_data = section[:image_data]
-        if image_data
-          command = ImageUpload.call(image_data)
-          if command.success?
-            @project.story.sections[index].image_url = command.result
-          end
         end
       end
     end

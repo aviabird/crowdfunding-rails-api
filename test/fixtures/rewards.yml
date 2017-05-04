@@ -11,6 +11,7 @@
 #  updated_at    :datetime         not null
 #  delivery_date :datetime
 #  quantity      :integer
+#  currency      :string
 #
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
