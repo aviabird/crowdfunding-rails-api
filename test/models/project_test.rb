@@ -18,6 +18,7 @@
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #  currency       :string
+#  end_date       :datetime
 #
 
 require 'test_helper'

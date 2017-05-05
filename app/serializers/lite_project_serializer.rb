@@ -20,7 +20,7 @@
 #
 
 class LiteProjectSerializer < ActiveModel::Serializer
-  attributes :id, :title, :video_url, :pledged_amount, :funded_amount, :percent_funded, 
+  attributes :id, :title, :video_url, :pledged_amount, :funded_amount, :percent_funded, :end_date,
              :funding_model, :start_date, :duration, :category_id, :category_name, :user_name, 
              :total_backers, :image_url, :currency
 

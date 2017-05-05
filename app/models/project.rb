@@ -18,6 +18,7 @@
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #  currency       :string
+#  end_date       :datetime
 #
 
 class Project < ApplicationRecord
@@ -49,6 +50,8 @@ class Project < ApplicationRecord
     end
 
   end
+
+  before_save :set_project_end_date
 
   has_many :pictures, as: :imageable, dependent: :destroy
   has_many :rewards, inverse_of: :project, dependent: :destroy
@@ -88,5 +91,12 @@ class Project < ApplicationRecord
   def send_project_approval_mail
     UserMailer.project_approved(self).deliver
   end
+
+  def set_project_end_date
+    start_date = self.start_date || Time.now
+    duration = self.duration || 0
+    self.end_date = start_date + duration.days
+  end
+
 
 end

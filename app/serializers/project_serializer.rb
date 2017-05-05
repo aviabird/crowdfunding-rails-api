@@ -18,10 +18,11 @@
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #  currency       :string
+#  end_date       :datetime
 #
 
 class ProjectSerializer < ActiveModel::Serializer
-  attributes :id, :title, :video_url, :pledged_amount, :currency,
+  attributes :id, :title, :video_url, :pledged_amount, :currency, :end_date,
              :funded_amount, :percent_funded, :funding_model, :start_date, :duration, :category_id,
              :category_name, :user_name, :total_backers
 
