@@ -18,7 +18,6 @@ module Api
       end
 
       def webhook
-        binding.pry
         event_json = JSON.parse(request.body.read)
       end
 

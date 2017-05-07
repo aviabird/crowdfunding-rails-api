@@ -37,6 +37,9 @@ Rails.application.routes.draw do
       post 'pay_by_sofort', to: 'stripe#sofort_payments'
       post 'webhook', to: 'stripe#webhook'
 
+      #routes for rewards controller
+      resources :rewards, only: [:index, :show]    
+
     end
   end
 
