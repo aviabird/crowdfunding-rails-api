@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170505081404) do
+ActiveRecord::Schema.define(version: 20170509074255) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -80,6 +80,19 @@ ActiveRecord::Schema.define(version: 20170505081404) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.index ["project_id"], name: "index_future_donors_on_project_id", using: :btree
+  end
+
+  create_table "kycs", force: :cascade do |t|
+    t.string   "document_image_url"
+    t.string   "document_id"
+    t.string   "document_type"
+    t.string   "name"
+    t.string   "nationality"
+    t.datetime "birth_date"
+    t.integer  "user_id"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.index ["user_id"], name: "index_kycs_on_user_id", using: :btree
   end
 
   create_table "links", force: :cascade do |t|

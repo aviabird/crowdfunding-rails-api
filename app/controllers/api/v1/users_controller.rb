@@ -53,6 +53,28 @@ class Api::V1::UsersController < ApplicationController
     end
   end
 
+  def get_user_kyc_info
+    kyc = current_user.kyc
+    render json: kyc, status: :ok
+  end
+
+  def update_user_kyc_info
+    kyc = Kyc.find_or_initialize_by(id: params[:id])
+    kyc.attributes = kyc_permitted_params
+    if (params[:document_image_data])
+      command = ImageUpload.call(params[:document_image_data])
+      if command.success?
+        kyc.document_image_url = command.result
+      end
+    end
+    kyc.user_id = current_user.id
+    if kyc.save!
+      render json: { message: 'user kyc saved' }, status: :ok
+    else
+      render json: { errors: kyc.errors }, status: 422
+    end
+  end
+
   private
 
   def auth_params
@@ -68,6 +90,10 @@ class Api::V1::UsersController < ApplicationController
 
   def find_user
     @user = User.find(params[:id])
+  end
+
+  def kyc_permitted_params
+    params.permit(:document_id, :document_type, :name, :nationality, :birth_date)
   end
 
 end

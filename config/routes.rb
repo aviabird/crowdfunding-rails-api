@@ -12,8 +12,10 @@ Rails.application.routes.draw do
 
       #routes for users controller
       get '/users/confirm_email', to: 'users#confirm_email'
+      get '/users/get_user_kyc_info', to: 'users#get_user_kyc_info'
       post '/users/update_profile_pic', to: 'users#update_profile_pic'
       resources :users, only: [:create, :show, :update]
+      post '/users/update_user_kyc_info', to: 'users#update_user_kyc_info'
       
       #routes for projects controller 
       get 'projects/view_project_from_mail', to: 'projects#view_project_from_mail'
