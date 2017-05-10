@@ -27,7 +27,7 @@ module ProjectService
     private
     
     def find_project
-      @project = Project.find(@params[:id])
+      @project = Project.find_by(id: @params[:id])
       @project.attributes = permitted_params
     end
 
@@ -37,11 +37,12 @@ module ProjectService
 
     def project_attributes
       [
-        :id, :video_url, :image_url, :category_id,
-        rewards_attributes: [:id, :title, :description, :image_url, :amount],
-        story_attributes: [:id, sections_attributes: [:id, :heading, :description] ],
-        faqs_attributes: [:id, :question, :answer],
-        links_attributes: [:id, :url],
+        :id, :title, :video_url, :pledged_amount, :funding_model, :start_date, :duration, :category_id, :currency,
+        pictures_attributes: [:id, :url, :_destroy],
+        rewards_attributes: [:id, :title, :description, :amount, :_destroy, :delivery_date, :quantity, :currency],
+        story_attributes: [:id, :body ],
+        faqs_attributes: [:id, :question, :answer, :_destroy],
+        links_attributes: [:id, :url, :_destroy],
         events_attributes: [:id, :title, :country, :date, :image_url, :description]
       ]  
     end
@@ -49,49 +50,19 @@ module ProjectService
     def perform_image_upload_callbacks
       case @type
       when 'project'
-        upload_project_image
-      when 'story'
-        upload_story_images
-      when 'reward'
-        upload_reward_images
+        upload_project_images
       end
     end
 
-    def upload_project_image
-      image_data = @params[:image_data]
-      return if image_data == ""
-      @project.image_url = upload_image(image_data)
-    end
-
-    def upload_story_images
-      @params["story_attributes"]["sections_attributes"].each_with_index do |section, index|
-        image_data = section[:image_data]
-        return if image_data == ""
-        @project.story.sections[index].image_url = upload_image(image_data)
-      end
-    end
-
-    def upload_reward_images
-      @params["rewards_attributes"].each_with_index do |reward, index|
-        image_data = reward[:image_data]
-        return if image_data == ""
-        @project.rewards[index].image_url = upload_image(image_data)
-      end 
-    end
-
-    def upload_image(image_data)
-      tries = 3
-      begin
-        response = Cloudinary::Uploader.upload(image_data, options = {})
-      rescue
-        tries -= 1
-        if tries > 0
-          retry
-        else
-          logger.info "Failed to Upload to Cloudinary"
+    def upload_project_images
+      images_data = @params[:images_data]
+      return if images_data.length == 0
+      images_data.each do |image_data|
+        command = ImageUpload.call(image_data)
+        if command.success?
+          url = command.result
+          @project.pictures << Picture.new(url: url)
         end
-      ensure
-        return response && response["secure_url"]
       end
     end
 
