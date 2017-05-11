@@ -12,6 +12,7 @@
 #  delivery_date :datetime
 #  quantity      :integer
 #  currency      :string
+#  backers_count :integer          default(0)
 #
 
 class Reward < ApplicationRecord

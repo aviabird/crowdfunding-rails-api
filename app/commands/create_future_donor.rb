@@ -1,11 +1,12 @@
 class CreateFutureDonor
   prepend SimpleCommand
 
-  def initialize(token, amount, user, project)
+  def initialize(token, amount, user, project, reward)
     @token = token
     @amount = amount.to_i
     @user = user
     @project = project
+    @reward = reward
   end
 
   def call
@@ -14,7 +15,9 @@ class CreateFutureDonor
     if @customer
       save_customer_to_charge_in_future
       increase_project_funded_amount_and_backers
+      increase_reward_backers_count if @reward
       create_notification
+      send_email_to_donor
     else
       nil
     end
@@ -45,8 +48,18 @@ class CreateFutureDonor
     @project.save
   end
 
+  def increase_reward_backers_count
+    @reward.backers_count += 1;
+    @reward.save
+  end
+
   def create_notification
     Notification.create(user_id: @project.user_id, subject: 'Project Funded', description: "Your project was funded with amount #{@amount}")
+    Notification.create(user_id: @user.id, subject: 'Project Donation', description: "You have successfully funded the project with the amount #{@amount}")    
+  end
+
+  def send_email_to_donor
+    UserMailer.donation_confirmed(@user, @amount).deliver
   end
 
 end

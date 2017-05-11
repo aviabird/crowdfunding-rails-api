@@ -1,11 +1,12 @@
 class CreateCharge
   prepend SimpleCommand
 
-  def initialize(token, amount, user, project)
+  def initialize(token, amount, user, project, reward)
     @token = token
     @amount = amount.to_i
-    @user_id = user.id
+    @user = user
     @project = project
+    @reward = reward
   end
 
   def call
@@ -14,7 +15,9 @@ class CreateCharge
       increase_project_funded_amount_and_backers
       add_charge_to_funding_transactions
       add_to_project_backers
-      create_notification
+      increase_reward_backers_count if @reward
+      create_notifications_to_donor_and_creator
+      send_email_to_donor
     else
       nil
     end
@@ -43,6 +46,7 @@ class CreateCharge
 
   def add_charge_to_funding_transactions
     charge_id = @charge.id
+    charge_status = @charge.status
     amount = @charge.amount
     currency = @charge.currency
     
@@ -52,19 +56,30 @@ class CreateCharge
       amount: amount,
       currency: currency,
       project_id: @project.id,
-      user_id: @user_id
+      user_id: @user.id,
+      charge_status: charge_status
     )
   end
 
   def add_to_project_backers
     ProjectBacker.create(
-      user_id: @user_id,
+      user_id: @user.id,
       project_id: @project.id
     )
   end
 
-  def create_notification
+  def increase_reward_backers_count
+    @reward.backers_count += 1;
+    @reward.save
+  end
+
+  def create_notifications_to_donor_and_creator
     Notification.create(user_id: @project.user_id, subject: 'Project Funded', description: "Your project was funded with amount #{@amount}")
+    Notification.create(user_id: @user.id, subject: 'Project Donation', description: "You have successfully funded the project with the amount #{@amount}")
+  end
+
+  def send_email_to_donor
+    UserMailer.donation_confirmed(@user, @amount).deliver
   end
 
 end

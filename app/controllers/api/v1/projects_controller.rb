@@ -67,26 +67,6 @@ module Api
         render json: project, status: :ok
       end
 
-      def fund_project
-        token = params[:stripeToken]
-        amount = params[:amount]
-        funding_type = @project.funding_model
-
-        command = if(funding_type == "flexi")
-          CreateCharge.call(token, amount, @current_user, @project) 
-        else
-          CreateFutureDonor.call(token, amount, @current_user, @project)
-        end
-        
-        if command.success?
-          message = funding_type == "flexi" ? "You have successfully backed this project"
-            : "Thanks for backing this project, We will charge once this project is fully funded"
-          render json: { message: message }
-        else
-          render json: { error: command.errors }
-        end
-      end
-
       def destroy
         if @project.destroy
           render json: { message: "project deleted" }, status: :ok

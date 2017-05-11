@@ -32,6 +32,7 @@ class ChargeCustomer
 
   def add_charge_to_funding_transactions
     charge_id = @charge.id
+    charge_status = @charge.status
     amount = @charge.amount
     currency = @charge.currency
     project_id = @customer.project_id

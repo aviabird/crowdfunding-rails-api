@@ -16,4 +16,10 @@ class UserMailer < ApplicationMailer
     mail(:to => "#{@user.name} <#{@user.email}>", :subject => "Project Approval")
   end
 
+  def donation_confirmed(user, amount)
+    @user = user
+    @amount = amount
+    mail(:to => "#{@user.name} <#{@user.email}>", :subject => "Project Donation")
+  end
+
 end

@@ -12,8 +12,9 @@
 #  delivery_date :datetime
 #  quantity      :integer
 #  currency      :string
+#  backers_count :integer          default(0)
 #
 
 class RewardSerializer < ActiveModel::Serializer
-  attributes :id, :title, :description, :amount, :delivery_date, :quantity, :currency
+  attributes :id, :title, :description, :amount, :delivery_date, :quantity, :currency, :backers_count
 end

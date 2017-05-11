@@ -19,7 +19,6 @@ Rails.application.routes.draw do
       
       #routes for projects controller 
       get 'projects/view_project_from_mail', to: 'projects#view_project_from_mail'
-      post 'projects/fund_project', to: 'projects#fund_project'
       get 'projects/draft', to: 'projects#get_draft_project'
       post 'projects/launch', to: 'projects#launch'
       resources :projects, only: [:create, :index, :update, :destroy, :show]
@@ -36,6 +35,7 @@ Rails.application.routes.draw do
       put 'notifications/read_notification', to: 'notifications#read_notification'
 
       #routes for stripe controller
+      post 'pay_by_card', to: 'stripe#card_payments'
       post 'pay_by_sofort', to: 'stripe#sofort_payments'
       post 'webhook', to: 'stripe#webhook'
 
