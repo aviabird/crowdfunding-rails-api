@@ -21,11 +21,14 @@ class FundingTransaction < ApplicationRecord
 
 
   def create_notification
-    Notification.create(
-      user_id: self.user_id,
-      subject: 'Card Charge',
-      description: 'Your card was charged for the project you funded'
-    )
+    amount = self.amount / 100
+    if (self.charge_status == "succeeded")
+      Notification.create(
+        user_id: self.user_id,
+        subject: 'Card Charge',
+        description: "Your card was charged with amount #{amount} for the project you funded"
+      )
+    end
   end
 
 end

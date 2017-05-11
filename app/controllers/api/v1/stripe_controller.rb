@@ -4,7 +4,6 @@ module Api
       before_action :authenticate_request, only: [:sofort_payments, :card_payments]
       before_action :find_project, only: [:sofort_payments, :card_payments]
       before_action :find_reward, only: [:sofort_payments, :card_payments]
-      rescue_from ActiveRecord::RecordNotFound, with: :not_found
 
       def card_payments
         token = params[:stripeToken]
@@ -29,18 +28,27 @@ module Api
       def sofort_payments
         token = params[:stripeToken]
         amount = params[:amount]
-        command = SofortPayment.call(token, amount, @current_user, @project) 
+        command = SofortPayment.call(token, amount, @current_user, @project, @reward) 
         if command.success?
-          message = command.result
+          message = "Thanks for backing up this project, Your payment may take upto 14 days to confirm, we will notify you once your payment is confirmed"
           render json: { message: message }
         else
           render json: { error: command.errors }
         end
       end
 
-      #webhook for sofort payments, later on chnage this so that it will be uniform through all payments
+      #webhook for sofort payments, later on change this so that it will be used by all payments
       def webhook
         event_json = JSON.parse(request.body.read)
+        if event_json["type"] == "charge.succeeded"
+          charge_object = event_json["data"]["object"]
+          charge_id = charge_object["id"]
+          funding_trans = FundingTransaction.find_by_charge_id(charge_id)
+          if funding_trans
+            funding_trans.charge_status = "succeeded"
+            funding_trans.save
+          end
+        end
       end
 
       private

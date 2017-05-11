@@ -44,7 +44,8 @@ class ChargeCustomer
       amount: amount,
       currency: currency,
       project_id: project_id,
-      user_id: user_id
+      user_id: user_id,
+      charge_status: charge_status
     )
   end
 

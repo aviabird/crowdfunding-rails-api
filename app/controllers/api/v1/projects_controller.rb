@@ -4,7 +4,6 @@ module Api
 
       before_action :authenticate_request, only: [:create, :update, :get_draft_project, :fund_project, :launch]
       before_action :find_project, only: [:show, :launch, :destroy, :show, :fund_project]
-      rescue_from ActiveRecord::RecordNotFound, with: :not_found
 
       def index
         @projects = Project.all.where(aasm_state: "funding")
