@@ -1,0 +1,19 @@
+# == Schema Information
+#
+# Table name: reports
+#
+#  id         :integer          not null, primary key
+#  reason     :text
+#  project_id :integer
+#  user_id    :integer
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  reason: MyText
+
+two:
+  reason: MyText

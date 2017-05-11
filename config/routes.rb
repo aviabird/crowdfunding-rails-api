@@ -14,15 +14,16 @@ Rails.application.routes.draw do
       get '/users/confirm_email', to: 'users#confirm_email'
       get '/users/get_user_kyc_info', to: 'users#get_user_kyc_info'
       post '/users/update_profile_pic', to: 'users#update_profile_pic'
-      resources :users, only: [:create, :show, :update]
       post '/users/update_user_kyc_info', to: 'users#update_user_kyc_info'
+      resources :users, only: [:create, :show, :update]
       
       #routes for projects controller 
       get 'projects/view_project_from_mail', to: 'projects#view_project_from_mail'
       get 'projects/draft', to: 'projects#get_draft_project'
       post 'projects/launch', to: 'projects#launch'
-      resources :projects, only: [:create, :index, :update, :destroy, :show]
       get 'projects/categories/:category', to: 'projects#search_by_category'
+      post 'projects/report_project', to: 'projects#report_project'
+      resources :projects, only: [:create, :index, :update, :destroy, :show]
 
       #routes for comments controller
       get 'comments/:project_id', to: 'comments#index'

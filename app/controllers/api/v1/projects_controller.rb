@@ -2,8 +2,8 @@ module Api
   module V1
     class ProjectsController < ApplicationController
 
-      before_action :authenticate_request, only: [:create, :update, :get_draft_project, :fund_project, :launch]
-      before_action :find_project, only: [:show, :launch, :destroy, :show, :fund_project]
+      before_action :authenticate_request, only: [:create, :update, :get_draft_project, :fund_project, :launch, :report_project]
+      before_action :find_project, only: [:show, :launch, :destroy, :show, :fund_project, :report_project]
 
       def index
         @projects = Project.all.where(aasm_state: "funding")
@@ -71,6 +71,20 @@ module Api
           render json: { message: "project deleted" }, status: :ok
         else
           render json: { message: "error: #{@project.errors}" }, status: :internal_server_error
+        end
+      end
+
+      def report_project
+        reason = params[:reason]
+        report = Report.new(
+          reason: reason,
+          user_id: current_user.id,
+          project_id: @project.id
+        )
+        if report.save
+          render json: { message: "This project has been reported, we will notify you once we look into the matter" }
+        else
+          render json: { message: "error: #{report.errors}" }, status: 422
         end
       end
 
