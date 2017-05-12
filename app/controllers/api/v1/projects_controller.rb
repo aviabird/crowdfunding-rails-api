@@ -76,16 +76,8 @@ module Api
 
       def report_project
         reason = params[:reason]
-        report = Report.new(
-          reason: reason,
-          user_id: current_user.id,
-          project_id: @project.id
-        )
-        if report.save
-          render json: { message: "This project has been reported, we will notify you once we look into the matter" }
-        else
-          render json: { message: "error: #{report.errors}" }, status: 422
-        end
+        mail_status = UserMailer.report_project(reason, @project).deliver
+        render json: { message: "we have sent your request to the admin" }, status: :ok
       end
 
       private
