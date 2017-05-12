@@ -59,7 +59,6 @@ module Api
       end
 
       def get_project_backers
-        binding.pry
         funding_type = @project.funding_model
         if(funding_type == "flexi")
           render json: @project.backers, each_serializer: LiteUserSerializer 
