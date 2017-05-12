@@ -3,7 +3,7 @@ module Api
     class ProjectsController < ApplicationController
 
       before_action :authenticate_request, only: [:create, :update, :get_draft_project, :fund_project, :launch, :report_project]
-      before_action :find_project, only: [:show, :launch, :destroy, :show, :fund_project, :report_project]
+      before_action :find_project, only: [:show, :launch, :destroy, :show, :fund_project, :report_project, :get_project_backers]
 
       def index
         @projects = Project.all.where(aasm_state: "funding")
@@ -56,6 +56,19 @@ module Api
           )
         end
         render json: { status: status }
+      end
+
+      def get_project_backers
+        binding.pry
+        funding_type = @project.funding_model
+        if(funding_type == "flexi")
+          render json: @project.backers, each_serializer: LiteUserSerializer 
+        else
+          backers = @project.future_donors.map do |donor|
+            User.find(donor.user_id)
+          end
+          render json: backers, each_serializer: LiteUserSerializer
+        end
       end
 
       def get_draft_project

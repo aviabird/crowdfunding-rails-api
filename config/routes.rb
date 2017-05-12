@@ -23,6 +23,7 @@ Rails.application.routes.draw do
       post 'projects/launch', to: 'projects#launch'
       get 'projects/categories/:category', to: 'projects#search_by_category'
       post 'projects/report_project', to: 'projects#report_project'
+      get 'projects/get_project_backers', to: 'projects#get_project_backers'
       resources :projects, only: [:create, :index, :update, :destroy, :show]
 
       #routes for comments controller
