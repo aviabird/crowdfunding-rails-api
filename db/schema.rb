@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170512073701) do
+ActiveRecord::Schema.define(version: 20170515050000) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -193,12 +193,13 @@ ActiveRecord::Schema.define(version: 20170512073701) do
     t.text     "description"
     t.integer  "amount"
     t.integer  "project_id"
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
     t.datetime "delivery_date"
     t.integer  "quantity"
     t.string   "currency"
-    t.integer  "backers_count", default: 0
+    t.integer  "backers_count",              default: 0
+    t.boolean  "contain_shipping_locations"
     t.index ["project_id"], name: "index_rewards_on_project_id", using: :btree
   end
 
@@ -216,6 +217,15 @@ ActiveRecord::Schema.define(version: 20170512073701) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.index ["story_id"], name: "index_sections_on_story_id", using: :btree
+  end
+
+  create_table "shipping_locations", force: :cascade do |t|
+    t.string   "location"
+    t.integer  "shipping_fee"
+    t.integer  "reward_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.index ["reward_id"], name: "index_shipping_locations_on_reward_id", using: :btree
   end
 
   create_table "social_auths", force: :cascade do |t|

@@ -1,0 +1,21 @@
+# == Schema Information
+#
+# Table name: shipping_locations
+#
+#  id           :integer          not null, primary key
+#  location     :string
+#  shipping_fee :integer
+#  reward_id    :integer
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  location: MyString
+  shipping_fee: 1
+
+two:
+  location: MyString
+  shipping_fee: 1

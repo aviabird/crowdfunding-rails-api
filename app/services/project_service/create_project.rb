@@ -39,7 +39,9 @@ module ProjectService
       [
         :id, :title, :video_url, :pledged_amount, :funding_model, :start_date, :duration, :category_id, :currency,
         pictures_attributes: [:id, :url, :_destroy],
-        rewards_attributes: [:id, :title, :description, :amount, :_destroy, :delivery_date, :quantity, :currency],
+        rewards_attributes: [:id, :title, :description, :amount, :_destroy, :delivery_date, :quantity, :currency,
+          :contain_shipping_locations, shipping_locations_attributes: [:id, :location, :shipping_fee]
+        ],
         story_attributes: [:id, :body ],
         faqs_attributes: [:id, :question, :answer, :_destroy],
         links_attributes: [:id, :url, :_destroy],

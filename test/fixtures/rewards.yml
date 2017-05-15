@@ -2,17 +2,18 @@
 #
 # Table name: rewards
 #
-#  id            :integer          not null, primary key
-#  title         :string
-#  description   :text
-#  amount        :integer
-#  project_id    :integer
-#  created_at    :datetime         not null
-#  updated_at    :datetime         not null
-#  delivery_date :datetime
-#  quantity      :integer
-#  currency      :string
-#  backers_count :integer          default(0)
+#  id                         :integer          not null, primary key
+#  title                      :string
+#  description                :text
+#  amount                     :integer
+#  project_id                 :integer
+#  created_at                 :datetime         not null
+#  updated_at                 :datetime         not null
+#  delivery_date              :datetime
+#  quantity                   :integer
+#  currency                   :string
+#  backers_count              :integer          default(0)
+#  contain_shipping_locations :boolean
 #
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
