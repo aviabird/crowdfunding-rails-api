@@ -32,6 +32,8 @@ class ProjectSerializer < ActiveModel::Serializer
   has_many :links
   has_one :story
 
+  belongs_to :user, serializer: LiteUserSerializer
+
   def category_name
     object.category.name
   end
