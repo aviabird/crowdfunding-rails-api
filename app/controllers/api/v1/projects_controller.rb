@@ -61,12 +61,12 @@ module Api
       def get_project_backers
         funding_type = @project.funding_model
         if(funding_type == "flexi")
-          render json: @project.backers, each_serializer: LiteUserSerializer 
+          render json: @project.backers.uniq, each_serializer: LiteUserSerializer 
         else
           backers = @project.future_donors.map do |donor|
             User.find(donor.user_id)
           end
-          render json: backers, each_serializer: LiteUserSerializer
+          render json: backers.uniq, each_serializer: LiteUserSerializer
         end
       end
 
