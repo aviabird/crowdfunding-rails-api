@@ -3,7 +3,7 @@ module Api
     class ProjectsController < ApplicationController
 
       before_action :authenticate_request, only: [:create, :update, :get_draft_project, :fund_project, :launch, :report_project]
-      before_action :find_project, only: [:show, :launch, :destroy, :show, :fund_project, :report_project, :get_project_backers]
+      before_action :find_project, only: [:show, :launch, :destroy, :show, :fund_project, :report_project, :get_project_backers, :send_notifications_to_backers]
 
       def index
         @projects = Project.all.where(aasm_state: "funding")
@@ -59,15 +59,22 @@ module Api
       end
 
       def get_project_backers
+        backers = find_backers
+        render json: backers, each_serializer: LiteUserSerializer
+      end
+
+      def find_backers
         funding_type = @project.funding_model
+        backers = []
         if(funding_type == "flexi")
-          render json: @project.backers.uniq, each_serializer: LiteUserSerializer 
+          backers = @project.backers.uniq 
         else
           backers = @project.future_donors.map do |donor|
             User.find(donor.user_id)
           end
-          render json: backers.uniq, each_serializer: LiteUserSerializer
+          backers = backers.uniq
         end
+        return backers
       end
 
       def get_draft_project
@@ -90,6 +97,20 @@ module Api
         reason = params[:reason]
         mail_status = UserMailer.report_project(reason, @project).deliver
         render json: { message: "we have sent your request to the admin" }, status: :ok
+      end
+
+      def send_notifications_to_backers
+        description = params[:description]
+        backers = find_backers
+        backer_ids = backers.pluck(:id)
+        backer_ids.each do |id|
+          Notification.create(
+            user_id: id,
+            subject: 'Project Updated',
+            description: description
+          )
+        end
+        render json: { message: "A Notification has been send to all project backers"}, status: :ok
       end
 
       private
