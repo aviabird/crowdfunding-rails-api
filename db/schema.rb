@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170515050000) do
+ActiveRecord::Schema.define(version: 20170518120627) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -264,6 +264,8 @@ ActiveRecord::Schema.define(version: 20170515050000) do
     t.string   "google_plus_url"
     t.string   "phone_no"
     t.integer  "total_backed_amount", default: 0
+    t.boolean  "is_stripe_connected", default: false
+    t.string   "stripe_user_id"
     t.index ["role_id"], name: "index_users_on_role_id", using: :btree
   end
 

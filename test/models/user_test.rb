@@ -19,6 +19,8 @@
 #  google_plus_url     :string
 #  phone_no            :string
 #  total_backed_amount :integer          default(0)
+#  is_stripe_connected :boolean          default(FALSE)
+#  stripe_user_id      :string
 #
 
 require 'test_helper'

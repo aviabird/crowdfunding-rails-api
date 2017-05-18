@@ -19,12 +19,14 @@
 #  google_plus_url     :string
 #  phone_no            :string
 #  total_backed_amount :integer          default(0)
+#  is_stripe_connected :boolean          default(FALSE)
+#  stripe_user_id      :string
 #
 
 class UserSerializer < ActiveModel::Serializer
   attributes :id, :name, :image_url, :email, :secondary_email, :phone_no, :role_name,
              :facebook_url, :twitter_url, :instagram_url, :google_plus_url, :backed_projects,
-             :project_backers
+             :project_backers, :is_stripe_connected
 
   has_one :address
   has_many :projects, serializer: LiteProjectSerializer

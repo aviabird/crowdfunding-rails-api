@@ -40,6 +40,7 @@ Rails.application.routes.draw do
       #routes for stripe controller
       post 'pay_by_card', to: 'stripe#card_payments'
       post 'pay_by_sofort', to: 'stripe#sofort_payments'
+      get 'get_user_stripe_credentials/:code', to: 'stripe#get_user_stripe_credentials'
       post 'webhook', to: 'stripe#webhook'
 
       #routes for rewards controller

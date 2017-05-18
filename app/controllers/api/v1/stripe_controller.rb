@@ -1,7 +1,7 @@
 module Api
   module V1
     class StripeController < ApplicationController
-      before_action :authenticate_request, only: [:sofort_payments, :card_payments]
+      before_action :authenticate_request, only: [:sofort_payments, :card_payments, :get_user_stripe_credentials]
       before_action :find_project, only: [:sofort_payments, :card_payments]
       before_action :find_reward, only: [:sofort_payments, :card_payments]
 
@@ -35,6 +35,30 @@ module Api
         else
           render json: { error: command.errors }
         end
+      end
+
+      def get_user_stripe_credentials
+        body = {
+          client_secret: ENV['STRIPE_SECRET_KEY'],
+          code: params['code'],
+          grant_type: 'authorization_code'
+        }
+        response = HTTParty.post(
+          'https://connect.stripe.com/oauth/token',
+          :query => body
+        )
+        if response["error"]
+          render json: { error: response["error_description"] }
+        else
+          current_user.stripe_user_id = response["stripe_user_id"]
+          current_user.is_stripe_connected = true
+          if current_user.save
+            render json: { message: "You stripe account is connected with crowdpouch" }
+          else
+            render json: { errors: current_user.errors }
+          end
+        end
+
       end
 
       #webhook for sofort payments, later on change this so that it will be used by all payments
