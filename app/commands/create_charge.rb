@@ -27,15 +27,15 @@ class CreateCharge
 
   def create_charge
     amount = @amount * 100 # since stripe accepts amount in lowest denomination
+    application_fee = amount * Setting.find_application_fee.to_f * 0.01
     stripe_account_id = @project.user.stripe_user_id
     @charge = Stripe::Charge.create({
       :amount => amount,
-      :currency => "eur",
+      :currency => "usd",
       :description => "Example charge",
       :source => @token,
-      :application_fee => 123
+      :application_fee => application_fee.to_i
     }, :stripe_account => stripe_account_id)
-
     rescue Stripe::CardError => e
       errors.add :card_error, e.message 
   end

@@ -14,3 +14,5 @@ end
 ['admin', 'donor', 'creator'].each do |role|
   Role.find_or_create_by({name: role})
 end
+
+Setting.find_or_create_by(key: "application_fee_percent", value: "2")
