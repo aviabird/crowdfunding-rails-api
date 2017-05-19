@@ -20,11 +20,13 @@ class ChargeCustomer
 
   def charge_customer
     amount = @customer.amount * 100
-    @charge = Stripe::Charge.create(
+    stripe_account_id = @customer.user.stripe_user_id
+    @charge = Stripe::Charge.create({
       :amount => amount,
       :currency => "usd",
       :customer => @customer.customer_id,
-    )
+      :application_fee => 123
+    }, :stripe_account => stripe_account_id)
     rescue Stripe::CardError => e
       puts e.message
   end

@@ -27,12 +27,14 @@ class SofortPayment
 
   def create_charge
     amount = @amount * 100
-    @charge = Stripe::Charge.create(
+    stripe_account_id = @project.user.stripe_user_id
+    @charge = Stripe::Charge.create({
       :amount => amount,
       :currency => "eur",
       :description => "Example charge",
       :source => @token,
-    )
+      :application_fee => 123
+    }, :stripe_account => stripe_account_id)
   end
 
   def increase_project_funded_amount_and_backers

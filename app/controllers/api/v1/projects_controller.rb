@@ -6,7 +6,8 @@ module Api
       before_action :find_project, only: [:show, :launch, :destroy, :show, :fund_project, :report_project, :get_project_backers, :send_notifications_to_backers]
 
       def index
-        @projects = Project.all.where(aasm_state: "funding")
+        is_stripe_connected_user = User.where(is_stripe_connected: true)
+        @projects = Project.all.where(aasm_state: "funding", user: is_stripe_connected_user)
         render json: @projects, each_serializer: LiteProjectSerializer, status: :ok
       end
 
